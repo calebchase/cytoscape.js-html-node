@@ -1,0 +1,156 @@
+export function loadHtmlNode() {
+  function test() {
+    console.log("this is a test.");
+  }
+  function resizeCard() {
+    var div;
+    var found = false;
+    cy.batch(function () {
+      cy.nodes().forEach(function (ele) {
+        div = document.getElementById(`htmlLabel:${ele.id()}`);
+        if (div != null) {
+          found = true;
+          var width = div.parentElement.offsetWidth;
+          var height = div.parentElement.offsetHeight;
+          cy.style()
+            .selector('[id = "' + ele.id() + '"]')
+            .style("width", width)
+            .style("height", height)
+            .update();
+        }
+      });
+    });
+    return found;
+  }
+
+  // Resize cytoscape nodes after html has been loaded
+  // TODO: fix resize not always working
+  window.onload = resizeCard;
+
+  // Sets starting html for labels based on cytoscape zoom level
+  function intializeCardHtml(cy, templates, query) {
+    let cyZoom = cy.zoom();
+    for (let i = 0; i < templates.length; i++) {
+      if (
+        cyZoom >= templates[i].zoomRange[0] &&
+        cyZoom < templates[i].zoomRange[1]
+      ) {
+        setCardData(cy, templates[i].template, query);
+        return templates[i].zoomRange;
+      }
+    }
+  }
+
+  // Replaces string targets with cytoscape node data
+  function getCardHtml(data, cardData) {
+    let htmlString = cardData.html;
+    let final = htmlString.replaceAll(/#{.*?}/g, (target) => {
+      // '#{data.prop}' => 'prop'
+      let dataProp = target.substring(7, target.length - 1);
+      return data[dataProp];
+    });
+    return final;
+  }
+
+  // Call to nodeHtmlLabel, displays html
+  function setCardData(cy, cardData, query) {
+    cy.nodeHtmlLabel([
+      {
+        query: query, // cytoscape query selector
+        halign: "center", // title vertical position. Can be 'left',''center, 'right'
+        valign: "center", // title vertical position. Can be 'top',''center, 'bottom'
+        halignBox: "center", // title vertical position. Can be 'left',''center, 'right'
+        valignBox: "center", // title relative box vertical position. Can be 'top',''center, 'bottom'
+        cssClass: cardData.cssClass, // any classes will be as attribute of <div> container for every title
+        tpl(data) {
+          return getCardHtml(data, cardData);
+        },
+      },
+    ]);
+  }
+
+  // Removes html label for corresponding cytoscape node
+  function removeHtmlLabel(htmlId) {
+    try {
+      document.getElementById(`htmlLabel:${htmlId}`).parentElement.remove();
+    } catch (error) {
+      console.error(htmlId);
+    }
+  }
+
+  // Removes html labels for corresponding cytoscape query
+  function removeHtmlLabels(cy, query) {
+    let cyNodes = cy.elements(query);
+    let i,
+      length = cyNodes.length;
+    for (i = 0; i < length; i++) {
+      removeHtmlLabel(cyNodes[i].id());
+    }
+  }
+
+  let rcard = true;
+  // Set html labels based on templates, sets cytoscape zoom to change html based on cytoscape zoom level
+  function setTemplate(cy, templates, query, defaultColor, altColor) {
+    let curZoomRange = intializeCardHtml(cy, templates, query);
+    let minZoom = templates[0].zoomRange[0];
+    let htmlRemoved = false;
+    let altColorSet = false;
+
+    cy.on("zoom", function (evt) {
+      if (rcard) {
+        resizeCard();
+        rcard = false;
+      }
+
+      if (cy.zoom() < minZoom && !htmlRemoved) {
+        removeHtmlLabels(cy, query);
+        htmlRemoved = true;
+        curZoomRange = [0, templates[0].zoomRange[0]];
+
+        cy.style().selector(query).style("background-color", altColor).update();
+        altColorSet = true;
+      }
+
+      if (cy.zoom() < curZoomRange[0] || cy.zoom() > curZoomRange[1]) {
+        for (let i = 0; i < templates.length; i++) {
+          if (
+            cy.zoom() > templates[i].zoomRange[0] &&
+            cy.zoom() < templates[i].zoomRange[1]
+          ) {
+            setCardData(cy, templates[i].template, query);
+            curZoomRange = templates[i].zoomRange;
+            if (!htmlRemoved) {
+              removeHtmlLabels(cy, query);
+            }
+            if (altColorSet) {
+              console.log("hit");
+              cy.style()
+                .selector(query)
+                .style("background-color", defaultColor)
+                .update();
+              altColorSet = false;
+            }
+            htmlRemoved = false;
+            break;
+          }
+        }
+      }
+    });
+  }
+
+  function createHtmlLabels(cy, templates) {
+    console.log(templates);
+    for (let key in templates) {
+      setTemplate(
+        cy,
+        templates[key].template,
+        templates[key].query,
+        templates[key].defaultColor,
+        templates[key].altColor
+      );
+    }
+  }
+  return {
+    test: createHtmlLabels,
+  };
+}
