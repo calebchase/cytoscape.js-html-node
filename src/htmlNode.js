@@ -1,6 +1,6 @@
 export function loadHtmlNode() {
   function test() {
-    console.log("this is a test.");
+    console.log('this is a test.');
   }
   function resizeCard() {
     var div;
@@ -14,8 +14,8 @@ export function loadHtmlNode() {
           var height = div.parentElement.offsetHeight;
           cy.style()
             .selector('[id = "' + ele.id() + '"]')
-            .style("width", width)
-            .style("height", height)
+            .style('width', width)
+            .style('height', height)
             .update();
         }
       });
@@ -31,10 +31,7 @@ export function loadHtmlNode() {
   function intializeCardHtml(cy, templates, query) {
     let cyZoom = cy.zoom();
     for (let i = 0; i < templates.length; i++) {
-      if (
-        cyZoom >= templates[i].zoomRange[0] &&
-        cyZoom < templates[i].zoomRange[1]
-      ) {
+      if (cyZoom >= templates[i].zoomRange[0] && cyZoom < templates[i].zoomRange[1]) {
         setCardData(cy, templates[i].template, query);
         return templates[i].zoomRange;
       }
@@ -57,10 +54,10 @@ export function loadHtmlNode() {
     cy.nodeHtmlLabel([
       {
         query: query, // cytoscape query selector
-        halign: "center", // title vertical position. Can be 'left',''center, 'right'
-        valign: "center", // title vertical position. Can be 'top',''center, 'bottom'
-        halignBox: "center", // title vertical position. Can be 'left',''center, 'right'
-        valignBox: "center", // title relative box vertical position. Can be 'top',''center, 'bottom'
+        halign: 'center', // title vertical position. Can be 'left',''center, 'right'
+        valign: 'center', // title vertical position. Can be 'top',''center, 'bottom'
+        halignBox: 'center', // title vertical position. Can be 'left',''center, 'right'
+        valignBox: 'center', // title relative box vertical position. Can be 'top',''center, 'bottom'
         cssClass: cardData.cssClass, // any classes will be as attribute of <div> container for every title
         tpl(data) {
           return getCardHtml(data, cardData);
@@ -96,7 +93,7 @@ export function loadHtmlNode() {
     let htmlRemoved = false;
     let altColorSet = false;
 
-    cy.on("zoom", function (evt) {
+    cy.on('zoom', function (evt) {
       if (rcard) {
         resizeCard();
         rcard = false;
@@ -107,27 +104,22 @@ export function loadHtmlNode() {
         htmlRemoved = true;
         curZoomRange = [0, templates[0].zoomRange[0]];
 
-        cy.style().selector(query).style("background-color", altColor).update();
+        cy.style().selector(query).style('background-color', altColor).update();
         altColorSet = true;
       }
 
       if (cy.zoom() < curZoomRange[0] || cy.zoom() > curZoomRange[1]) {
         for (let i = 0; i < templates.length; i++) {
-          if (
-            cy.zoom() > templates[i].zoomRange[0] &&
-            cy.zoom() < templates[i].zoomRange[1]
-          ) {
+          if (cy.zoom() > templates[i].zoomRange[0] && cy.zoom() < templates[i].zoomRange[1]) {
             setCardData(cy, templates[i].template, query);
             curZoomRange = templates[i].zoomRange;
             if (!htmlRemoved) {
               removeHtmlLabels(cy, query);
             }
+
             if (altColorSet) {
-              console.log("hit");
-              cy.style()
-                .selector(query)
-                .style("background-color", defaultColor)
-                .update();
+              console.log('hit');
+              cy.style().selector(query).style('background-color', defaultColor).update();
               altColorSet = false;
             }
             htmlRemoved = false;

@@ -1,35 +1,35 @@
-import cytoscape from "cytoscape";
-import { register as htmlnode } from "../dist/main.bundle.js";
+import cytoscape from 'cytoscape';
+import { register as htmlnode } from '../dist/main.bundle.js';
 //import { register as htmlnode } from "./index.js";
 
-var nodeHtmlLabel = require("cytoscape-node-html-label");
+var nodeHtmlLabel = require('cytoscape-node-html-label');
 
 cytoscape.use(htmlnode);
 nodeHtmlLabel(cytoscape);
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
   var cy = (window.cy = cytoscape({
-    container: document.getElementById("cy"),
-    autounselectify: "true",
+    container: document.getElementById('cy'),
+    autounselectify: 'true',
     style: [
       {
-        selector: "node",
+        selector: 'node',
         css: {
-          content: " ",
+          content: ' ',
         },
         style: {
-          content: "",
-          "background-color": "lightgrey",
-          shape: "round-rectangle",
+          content: '',
+          'background-color': 'lightgrey',
+          shape: 'round-rectangle',
           width: 100,
           height: 100,
         },
       },
       {
-        selector: "edge",
+        selector: 'edge',
         style: {
-          "curve-style": "bezier",
-          "target-arrow-shape": "triangle",
+          'curve-style': 'bezier',
+          'target-arrow-shape': 'triangle',
         },
       },
     ],
@@ -37,220 +37,217 @@ document.addEventListener("DOMContentLoaded", function () {
       nodes: [
         {
           data: {
-            id: "a",
-            type: "person",
-            longName: "Dean Keaton",
-            shortName: "Keaton",
-            image: "./examplePics/dKeaton.png",
-            shortSum: "Ex police officer.  In relationship with a lawyer.",
+            id: 'a',
+            type: 'person',
+            longName: 'Dean Keaton',
+            shortName: 'Keaton',
+            image: './examplePics/dKeaton.png',
+            shortSum: 'Ex police officer.  In relationship with a lawyer.',
             longSum:
-              "Indicted for corruption. Currently in a relationship with a lawyer. No recent infractions.",
+              'Indicted for corruption. Currently in a relationship with a lawyer. No recent infractions.',
           },
         },
 
         {
           data: {
-            id: "b",
-            type: "person",
-            longName: "Roger Kint",
-            shortName: "Kint",
-            image: "./examplePics/rKint.png",
-            shortSum: "Disabled. Witness to incident. Manipulator.",
+            id: 'b',
+            type: 'person',
+            longName: 'Roger Kint',
+            shortName: 'Kint',
+            image: './examplePics/rKint.png',
+            shortSum: 'Disabled. Witness to incident. Manipulator.',
             longSum:
-              "Physically disabled. Expert at verbal manipulation. Only conscious witness to incident.",
+              'Physically disabled. Expert at verbal manipulation. Only conscious witness to incident.',
           },
         },
 
         {
           data: {
-            id: "c",
-            type: "person",
-            longName: "Fred Fenster",
-            shortName: "Fenster",
-            image: "./examplePics/fFenster.png",
-            shortSum: "Works with McManus. Killed by Söze.",
-            longSum:
-              "This a long summary that includes more background info to show.",
+            id: 'c',
+            type: 'person',
+            longName: 'Fred Fenster',
+            shortName: 'Fenster',
+            image: './examplePics/fFenster.png',
+            shortSum: 'Works with McManus. Killed by Söze.',
+            longSum: 'This a long summary that includes more background info to show.',
           },
         },
 
         {
           data: {
-            id: "d",
-            type: "person",
-            longName: "Todd Hockney",
-            shortName: "Hockney",
-            image: "./examplePics/tHockney.png",
-            shortSum: "Auto mechanic. Knowledgeable with explosives.",
-            longSum:
-              "This a long summary that includes more background info to show.",
+            id: 'd',
+            type: 'person',
+            longName: 'Todd Hockney',
+            shortName: 'Hockney',
+            image: './examplePics/tHockney.png',
+            shortSum: 'Auto mechanic. Knowledgeable with explosives.',
+            longSum: 'This a long summary that includes more background info to show.',
           },
         },
 
         {
           data: {
-            id: "e",
-            type: "person",
-            longName: "Mike McManus",
-            shortName: "McManus",
-            image: "./examplePics/mMcManus.png",
-            shortSum: "Works with Fenster. Proposes heist. ",
-            longSum:
-              "This a long summary that includes more background info to show.",
+            id: 'e',
+            type: 'person',
+            longName: 'Mike McManus',
+            shortName: 'McManus',
+            image: './examplePics/mMcManus.png',
+            shortSum: 'Works with Fenster. Proposes heist. ',
+            longSum: 'This a long summary that includes more background info to show.',
           },
         },
 
         // { data: { id: 'b', type: 'person', name: 'Corbin Horne', image: 'testB.jpg', location: 'south', info: 'this is some test info to use', newData: 'This is new data!' } },
         {
           data: {
-            id: "f",
-            type: "event",
-            eventTitle: "Interrogation",
-            image: "testC.jpg",
-            longSum: "Led by David Kujan. Concerns boat incident.",
-            shortSum: "Led by David Kujan.",
+            id: 'f',
+            type: 'event',
+            eventTitle: 'Interrogation',
+            image: 'testC.jpg',
+            longSum: 'Led by David Kujan. Concerns boat incident.',
+            shortSum: 'Led by David Kujan.',
           },
         },
         {
           data: {
-            id: "g",
-            type: "event",
-            eventTitle: "Line Up",
-            image: "testC.jpg",
-            longSum: "Hijacking suspects.",
-            shortSum: "Hijacking suspects.",
-          },
-        },
-
-        {
-          data: {
-            id: "aC",
-            type: "identifier",
-            identifierTitle: "Contacts",
-            icon: "class",
-            shortSum: "Details",
-            longSum: "Benn Mcclain, Kirk Shaffer, Eugene Mitchell",
-          },
-        },
-        {
-          data: {
-            id: "bC",
-            type: "identifier",
-            identifierTitle: "Contacts",
-            icon: "class",
-            shortSum: "Details",
-            longSum: "Damien Mcloughlin, Dominik R, Reya Mckinney",
-          },
-        },
-        {
-          data: {
-            id: "dC",
-            type: "identifier",
-            identifierTitle: "Contacts",
-            icon: "class",
-            shortSum: "Details",
-            longSum: "this is some test info to use",
-          },
-        },
-        {
-          data: {
-            id: "eC",
-            type: "identifier",
-            identifierTitle: "Contacts",
-            icon: "class",
-            shortSum: "Details",
-            longSum: "this is some test info to use",
+            id: 'g',
+            type: 'event',
+            eventTitle: 'Line Up',
+            image: 'testC.jpg',
+            longSum: 'Hijacking suspects.',
+            shortSum: 'Hijacking suspects.',
           },
         },
 
         {
           data: {
-            id: "aT",
-            type: "identifier",
-            identifierTitle: "Timeline",
-            icon: "timeline",
-            shortSum: "Details",
-            longSum: "this is some test info to use",
+            id: 'aC',
+            type: 'identifier',
+            identifierTitle: 'Contacts',
+            icon: 'class',
+            shortSum: 'Details',
+            longSum: 'Benn Mcclain, Kirk Shaffer, Eugene Mitchell',
           },
         },
         {
           data: {
-            id: "bT",
-            type: "identifier",
-            identifierTitle: "Timeline",
-            icon: "timeline",
-            shortSum: "Details",
-            longSum: "this is some test info to use",
+            id: 'bC',
+            type: 'identifier',
+            identifierTitle: 'Contacts',
+            icon: 'class',
+            shortSum: 'Details',
+            longSum: 'Damien Mcloughlin, Dominik R, Reya Mckinney',
           },
         },
         {
           data: {
-            id: "cT",
-            type: "identifier",
-            identifierTitle: "Timeline",
-            icon: "timeline",
-            shortSum: "Details",
-            longSum: "this is some test info to use",
+            id: 'dC',
+            type: 'identifier',
+            identifierTitle: 'Contacts',
+            icon: 'class',
+            shortSum: 'Details',
+            longSum: 'this is some test info to use',
+          },
+        },
+        {
+          data: {
+            id: 'eC',
+            type: 'identifier',
+            identifierTitle: 'Contacts',
+            icon: 'class',
+            shortSum: 'Details',
+            longSum: 'this is some test info to use',
           },
         },
 
         {
           data: {
-            id: "dB",
-            type: "identifier",
-            identifierTitle: "Bank Info",
-            icon: "credit_card",
-            shortSum: "Details",
-            longSum: "this is some test info to use",
+            id: 'aT',
+            type: 'identifier',
+            identifierTitle: 'Timeline',
+            icon: 'timeline',
+            shortSum: 'Details',
+            longSum: 'this is some test info to use',
           },
         },
         {
           data: {
-            id: "cB",
-            type: "identifier",
-            identifierTitle: "Bank Info",
-            icon: "credit_card",
-            shortSum: "Details",
-            longSum: "this is some test info to use",
+            id: 'bT',
+            type: 'identifier',
+            identifierTitle: 'Timeline',
+            icon: 'timeline',
+            shortSum: 'Details',
+            longSum: 'this is some test info to use',
           },
         },
         {
           data: {
-            id: "eB",
-            type: "identifier",
-            identifierTitle: "Bank Info",
-            icon: "credit_card",
-            shortSum: "Details",
-            longSum: "this is some test info to use",
+            id: 'cT',
+            type: 'identifier',
+            identifierTitle: 'Timeline',
+            icon: 'timeline',
+            shortSum: 'Details',
+            longSum: 'this is some test info to use',
+          },
+        },
+
+        {
+          data: {
+            id: 'dB',
+            type: 'identifier',
+            identifierTitle: 'Bank Info',
+            icon: 'credit_card',
+            shortSum: 'Details',
+            longSum: 'this is some test info to use',
+          },
+        },
+        {
+          data: {
+            id: 'cB',
+            type: 'identifier',
+            identifierTitle: 'Bank Info',
+            icon: 'credit_card',
+            shortSum: 'Details',
+            longSum: 'this is some test info to use',
+          },
+        },
+        {
+          data: {
+            id: 'eB',
+            type: 'identifier',
+            identifierTitle: 'Bank Info',
+            icon: 'credit_card',
+            shortSum: 'Details',
+            longSum: 'this is some test info to use',
           },
         },
       ],
       edges: [
-        { data: { source: "a", target: "aC" } },
-        { data: { source: "a", target: "aT" } },
-        { data: { source: "a", target: "g" } },
+        { data: { source: 'a', target: 'aC' } },
+        { data: { source: 'a', target: 'aT' } },
+        { data: { source: 'a', target: 'g' } },
 
-        { data: { source: "b", target: "bT" } },
-        { data: { source: "b", target: "bC" } },
-        { data: { source: "b", target: "g" } },
+        { data: { source: 'b', target: 'bT' } },
+        { data: { source: 'b', target: 'bC' } },
+        { data: { source: 'b', target: 'g' } },
 
-        { data: { source: "c", target: "cT" } },
-        { data: { source: "c", target: "cB" } },
-        { data: { source: "c", target: "g" } },
+        { data: { source: 'c', target: 'cT' } },
+        { data: { source: 'c', target: 'cB' } },
+        { data: { source: 'c', target: 'g' } },
 
-        { data: { source: "d", target: "dB" } },
-        { data: { source: "d", target: "dC" } },
-        { data: { source: "d", target: "g" } },
+        { data: { source: 'd', target: 'dB' } },
+        { data: { source: 'd', target: 'dC' } },
+        { data: { source: 'd', target: 'g' } },
 
-        { data: { source: "e", target: "eC" } },
-        { data: { source: "e", target: "eB" } },
-        { data: { source: "e", target: "g" } },
+        { data: { source: 'e', target: 'eC' } },
+        { data: { source: 'e', target: 'eB' } },
+        { data: { source: 'e', target: 'g' } },
 
-        { data: { source: "b", target: "f" } },
+        { data: { source: 'b', target: 'f' } },
       ],
     },
     layout: {
-      name: "grid",
+      name: 'grid',
       spacingFactor: 0.5,
     },
   }));
@@ -260,8 +257,8 @@ document.addEventListener("DOMContentLoaded", function () {
   htmlnode.test(cy, {
     person: {
       query: "[type = 'person']",
-      defaultColor: "lightGrey",
-      altColor: "darkBlue",
+      defaultColor: 'lightGrey',
+      altColor: 'darkBlue',
       template: [
         {
           zoomRange: [0.3, 1],
@@ -269,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
             html: `<div id="htmlLabel:#{data.id}" class="">
                       <div class=" largeFont">#{data.longName}</div>
                     </div>`,
-            cssClass: "htmlCard",
+            cssClass: 'htmlCard',
           },
         },
         {
@@ -283,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                       <div class="">#{data.shortSum}</div>
                     </div>`,
-            cssClass: "htmlCard",
+            cssClass: 'htmlCard',
           },
         },
         {
@@ -296,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       </div>
                       <div class="smallFont">#{data.longSum}</div>
                     </div>`,
-            cssClass: "htmlCard",
+            cssClass: 'htmlCard',
           },
         },
       ],
@@ -304,8 +301,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     event: {
       query: "[type = 'event']",
-      defaultColor: "lightGrey",
-      altColor: "darkRed",
+      defaultColor: 'lightGrey',
+      altColor: 'darkRed',
       template: [
         {
           zoomRange: [0.3, 1],
@@ -318,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   </div>
                 </div>
               </div>`,
-            cssClass: "htmlEvent",
+            cssClass: 'htmlEvent',
           },
         },
         {
@@ -333,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   </div>
                 </div>
               </div>`,
-            cssClass: "htmlEvent",
+            cssClass: 'htmlEvent',
           },
         },
         {
@@ -348,7 +345,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   </div>
                 </div>
               </div>`,
-            cssClass: "htmlEvent",
+            cssClass: 'htmlEvent',
           },
         },
       ],
@@ -356,8 +353,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     identifier: {
       query: "[type = 'identifier']",
-      defaultColor: "lightGrey",
-      altColor: "darkGreen",
+      defaultColor: 'lightGrey',
+      altColor: 'darkGreen',
       template: [
         {
           zoomRange: [0.3, 1],
@@ -366,7 +363,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       <div class="largeFont">#{data.identifierTitle}</div>
                       <i style="color:darkgreen;"class="material-icons font">#{data.icon}</i>
                     </div>`,
-            cssClass: "htmlidentifier",
+            cssClass: 'htmlidentifier',
           },
         },
         {
@@ -377,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       <i style="color:darkgreen;"class="material-icons font">#{data.icon}</i>
                       <div>#{data.shortSum}</div>
                     </div>`,
-            cssClass: "htmlidentifier",
+            cssClass: 'htmlidentifier',
           },
         },
         {
@@ -391,7 +388,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                       <div class="smallFont">#{data.longSum}</div>
                     </div>`,
-            cssClass: "htmlidentifier",
+            cssClass: 'htmlidentifier',
           },
         },
       ],
