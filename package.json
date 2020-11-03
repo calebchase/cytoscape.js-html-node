@@ -6,6 +6,10 @@
     "start": "webpack serve --config webpack.config.js",
     "build": "webpack --config webpack.config.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/calebchase/cytoscape.js-html-node.git"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
