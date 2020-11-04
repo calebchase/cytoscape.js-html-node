@@ -19,7 +19,7 @@
   "keywords": [
     "cytoscape",
     "html",
-    "label"
+    "node"
   ],
   "license": "ISC",
   "scripts": {
