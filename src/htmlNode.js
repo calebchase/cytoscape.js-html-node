@@ -1,15 +1,14 @@
 export function loadHtmlNode() {
-  console.log('this is an update');
   function resizeCard() {
-    var div;
-    var found = false;
+    let div;
+    let found = false;
     cy.batch(function () {
       cy.nodes().forEach(function (ele) {
         div = document.getElementById(`htmlLabel:${ele.id()}`);
         if (div != null) {
           found = true;
-          var width = div.parentElement.offsetWidth;
-          var height = div.parentElement.offsetHeight;
+          let width = div.parentElement.offsetWidth;
+          let height = div.parentElement.offsetHeight;
           cy.style()
             .selector('[id = "' + ele.id() + '"]')
             .style('width', width)
@@ -21,8 +20,6 @@ export function loadHtmlNode() {
     return found;
   }
 
-  // Resize cytoscape nodes after html has been loaded
-  // TODO: fix resize not always working
   window.onload = resizeCard;
 
   // Sets starting html for labels based on cytoscape zoom level
@@ -69,15 +66,15 @@ export function loadHtmlNode() {
     try {
       document.getElementById(`htmlLabel:${htmlId}`).parentElement.remove();
     } catch (error) {
-      console.error(htmlId);
+      console.error('Unable to remove: ', htmlId);
     }
   }
 
   // Removes html labels for corresponding cytoscape query
   function removeHtmlLabels(cy, query) {
     let cyNodes = cy.elements(query);
-    let i,
-      length = cyNodes.length;
+    let i;
+    let length = cyNodes.length;
     for (i = 0; i < length; i++) {
       removeHtmlLabel(cyNodes[i].id());
     }
@@ -116,7 +113,6 @@ export function loadHtmlNode() {
             }
 
             if (altColorSet) {
-              console.log('hit');
               cy.style().selector(query).style('background-color', defaultColor).update();
               altColorSet = false;
             }
@@ -128,8 +124,7 @@ export function loadHtmlNode() {
     });
   }
 
-  function createHtmlLabels(cy, templates) {
-    console.log(cy);
+  function createHtmlNode(cy, templates) {
     for (let key in templates) {
       setTemplate(
         cy,
@@ -141,6 +136,6 @@ export function loadHtmlNode() {
     }
   }
   return {
-    test: createHtmlLabels,
+    createHtmlNode: createHtmlNode,
   };
 }
