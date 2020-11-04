@@ -127,10 +127,10 @@ htmlnode.createHtmlNode(cy, {
 
 Use information:
 
-- `js query`: Accepts any cytoscape query. Specifies which nodes `js template` will apply to.
+- `query`: Accepts any cytoscape query. Specifies which nodes `template` will apply to.
 
-- `js defaultColor`: The color of the cytoscape node(s) when zoom has not passed the minimum `js zoomRange` value.
+- `defaultColor`: The color of the cytoscape node(s) when zoom has not passed the minimum `zoomRange` value.
 
-- `js altColor`: The color of the cytoscape node(s) when zoom has passed the minimum `js zoomRange` value.
+- `altColor`: The color of the cytoscape node(s) when zoom has passed the minimum `zoomRange` value.
 
-- `js zoomRange`: The zoom range for which the template html is used. The values for each `js zoomRange` within a `js query` should be continuous with ascending values. The minimum value of all `js zoomRange` within a `js query` specifies when to toggle between `js altColor` and `js defaultColor`. The largest `js zoomRange` should be arbitrarily large.
+- `zoomRange`: The zoom range for which the template html is used. The values for each `zoomRange` within a `query` should be continuous with ascending values. The minimum value of all `zoomRange` within a `query` specifies when to toggle between `altColor` and `defaultColor`. The largest `zoomRange` should be arbitrarily large.
