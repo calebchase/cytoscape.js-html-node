@@ -1,7 +1,6 @@
 import { loadHtmlNode } from './htmlNode.js';
 
 function register(cytoscape) {
-  console.log('working');
   if (!cytoscape) {
     console.warn('Attempt to register cytoscape-stickynote with invalid cytoscape instance!');
     return;
