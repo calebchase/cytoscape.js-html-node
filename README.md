@@ -1,8 +1,8 @@
-## cytoscape-cxtmenu
+## cytoscape-html-node
 
 ## Description
 
-This extension allows the creation of html embedded in cytoscape nodes that can change based on zoom level.
+This extension allows for the creation of html in cytoscape nodes that can change based on zoom level.
 
 This extension was built as a use case of https://github.com/kaluginserg/cytoscape-node-html-label.
 

@@ -1,11 +1,10 @@
 import cytoscape from 'cytoscape';
 import { register as htmlnode } from '../dist/main.bundle.js';
-//import { register as htmlnode } from "./index.js";
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
+nodeHtmlLabel(cytoscape);
 
 cytoscape.use(htmlnode);
-nodeHtmlLabel(cytoscape);
 
 document.addEventListener('DOMContentLoaded', function () {
   var cy = (window.cy = cytoscape({

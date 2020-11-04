@@ -1,7 +1,5 @@
 export function loadHtmlNode() {
-  function test() {
-    console.log('this is a test.');
-  }
+  console.log('this is an update');
   function resizeCard() {
     var div;
     var found = false;
@@ -131,7 +129,7 @@ export function loadHtmlNode() {
   }
 
   function createHtmlLabels(cy, templates) {
-    console.log(templates);
+    console.log(cy);
     for (let key in templates) {
       setTemplate(
         cy,
