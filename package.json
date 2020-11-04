@@ -1,5 +1,5 @@
 {
-  "name": "cytoscape.js-html-node",
+  "name": "cytoscape-html-node",
   "version": "1.0.0",
   "description": "This extension allows for the creation of html in cytoscape nodes that can change based on zoom level.",
   "main": "dist/main.bundle.js",
