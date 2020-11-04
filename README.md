@@ -47,4 +47,90 @@ require(['cytoscape', 'cytoscape-html-node'], function (cytoscape, htmlnode) {
 
 ## API
 
-//TODO
+Example:
+
+```js
+const htmlnode = cy.htmlnode();
+
+htmlnode.createHtmlNode(cy, {
+  person: {
+    query: "[type = 'person']",
+    defaultColor: 'lightGrey',
+    altColor: 'darkBlue',
+    template: [
+      {
+        zoomRange: [0.3, 1],
+        template: {
+          html: `<div id="htmlLabel:#{data.id}">
+                   <div class="largeFont">#{data.shortSum}</div>
+                 </div>`,
+          cssClass: 'htmlCard',
+        },
+      },
+      {
+        zoomRange: [1, 3],
+        template: {
+          html: `<div id="htmlLabel:#{data.id}">
+                   <div class="mediumFont">#{data.mediumSum}</div>
+                 </div>`,
+          cssClass: 'htmlCard',
+        },
+      },
+      {
+        zoomRange: [3, 100],
+        template: {
+          html: `<div id="htmlLabel:#{data.id}" class="cardField">
+                   <div class="smallFont">#{data.longSum}</div>
+                 </div>`,
+          cssClass: 'htmlCard',
+        },
+      },
+    ],
+  },
+
+  event: {
+    query: "[type = 'event']",
+    defaultColor: 'lightGrey',
+    altColor: 'darkRed',
+    template: [
+      {
+        zoomRange: [0.3, 1],
+        template: {
+          html: `<div id="htmlLabel:#{data.id}">
+                   <div class="smallFont">#{data.shortEventInfo}</div>
+                 </div>`,
+          cssClass: 'htmlEvent',
+        },
+      },
+      {
+        zoomRange: [1, 3],
+        template: {
+          html: `<div id="htmlLabel:#{data.id}">
+                   <div class="mediumFont">#{data.mediumEventInfo}</div>
+                 </div>`,
+          cssClass: 'htmlEvent',
+        },
+      },
+      {
+        zoomRange: [3, 100],
+        template: {
+          html: `<div id="htmlLabel:#{data.id}">
+                   <div class="smallFont">#{data.longEventInfo}</div>
+                 </div>`,
+          cssClass: 'htmlEvent',
+        },
+      },
+    ],
+  },
+});
+```
+
+Use information:
+
+- `js query`: Accepts any cytoscape query. Specifies which nodes `js template` will apply to.
+
+- `js defaultColor`: The color of the cytoscape node(s) when zoom has not passed the minimum `js zoomRange` value.
+
+- `js altColor`: The color of the cytoscape node(s) when zoom has passed the minimum `js zoomRange` value.
+
+- `js zoomRange`: The zoom range for which the template html is used. The values for each `js zoomRange` within a `js query` should be continuous with ascending values. The minimum value of all `js zoomRange` within a `js query` specifies when to toggle between `js altColor` and `js defaultColor`. The largest `js zoomRange` should be arbitrarily large.
