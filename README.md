@@ -15,7 +15,8 @@ This extension was built as a use case of https://github.com/kaluginserg/cytosca
 
 Download the library:
 
-git clone https://github.com/calebchase/cytoscape.js-html-node.git
+- via npm: `npm install cytoscape-cxtmenu`,
+- via direct download in the repository.
 
 Import the library as appropriate for your project:
 
@@ -34,14 +35,14 @@ CommonJS require:
 let cytoscape = require('cytoscape');
 let htmlnode = require('cytoscape-html-node');
 
-cytoscape.use(htmlnode); // register extension
+cytoscape.use(htmlnode);
 ```
 
 AMD:
 
 ```js
 require(['cytoscape', 'cytoscape-html-node'], function (cytoscape, htmlnode) {
-  htmlnode(cytoscape); // register extension
+  htmlnode(cytoscape);
 });
 ```
 
