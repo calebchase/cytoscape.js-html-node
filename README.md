@@ -128,10 +128,12 @@ htmlnode.createHtmlNode(cy, {
 
 Use information:
 
-- `query`: Accepts any cytoscape query. Specifies which nodes `template` will apply to.
+- `query`: Accepts any cytoscape query. Specifies which node(s)`template` will apply to.
 
 - `defaultColor`: The color of the cytoscape node(s) when zoom has not passed the minimum `zoomRange` value.
 
 - `altColor`: The color of the cytoscape node(s) when zoom has passed the minimum `zoomRange` value.
 
 - `zoomRange`: The zoom range for which the template html is used. The values for each `zoomRange` within a `query` should be continuous with ascending values. The minimum value of all `zoomRange` within a `query` specifies when to toggle between `altColor` and `defaultColor`. The largest `zoomRange` should be arbitrarily large.
+
+- Cytoscape data can be accessed within html using `#{data.prop}` where prop is some cytoscape node data property.
