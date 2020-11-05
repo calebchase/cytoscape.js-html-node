@@ -15,7 +15,7 @@ This extension was built as a use case of https://github.com/kaluginserg/cytosca
 
 Download the library:
 
-- via npm: `npm install cytoscape-cxtmenu`
+- via npm: `npm install cytoscape-html-node`
 - via direct download in the repository
 
 Import the library as appropriate for your project:
