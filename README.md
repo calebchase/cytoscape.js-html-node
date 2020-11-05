@@ -8,15 +8,15 @@ This extension was built as a use case of https://github.com/kaluginserg/cytosca
 
 ## Dependencies
 
-- cytoscape: ^3.16.3,
-- cytoscape-node-html-label": ^1.2.1
+- cytoscape: ^3.16.3
+- cytoscape-node-html-label: ^1.2.1
 
 ## Usage instructions
 
 Download the library:
 
-- via npm: `npm install cytoscape-cxtmenu`,
-- via direct download in the repository.
+- via npm: `npm install cytoscape-cxtmenu`
+- via direct download in the repository
 
 Import the library as appropriate for your project:
 
