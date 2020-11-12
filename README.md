@@ -51,6 +51,58 @@ require(['cytoscape', 'cytoscape-html-node'], function (cytoscape, htmlnode) {
 Example:
 
 ```js
+import cytoscape from 'cytoscape';
+import { register as htmlnode } from 'cytoscape-html-node';
+
+// register extensions
+cytoscape.use(htmlnode);
+nodeHtmlLabel(cytoscape);
+
+let cy = cytoscape({
+  container: document.getElementById('cy'),
+  layout: {
+    name: 'random',
+  },
+  elements: [
+    {
+      group: 'nodes',
+      data: {
+        id: 'a1',
+        shortSum: 'Short summary.',
+        mediumSum: 'This a medium summary.',
+        longSum: 'This is a much longer summary.',
+      },
+    },
+    {
+      group: 'nodes',
+      data: {
+        id: 'a2',
+        shortSum: 'Short summary.',
+        mediumSum: 'This a medium summary.',
+        longSum: 'This is a much longer summary.',
+      },
+    },
+    {
+      group: 'nodes',
+      data: {
+        id: 'a3',
+        shortSum: 'Short summary.',
+        mediumSum: 'This a medium summary.',
+        longSum: 'This is a much longer summary.',
+      },
+    },
+    {
+      group: 'nodes',
+      data: {
+        id: 'a4',
+        shortSum: 'Short summary.',
+        mediumSum: 'This a medium summary.',
+        longSum: 'This is a much longer summary.',
+      },
+    },
+  ],
+});
+
 const htmlnode = cy.htmlnode();
 
 htmlnode.createHtmlNode(cy, {
