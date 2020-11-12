@@ -1,4 +1,4 @@
-## cytoscape-html-node
+# cytoscape-html-node
 
 ## Description
 
@@ -137,3 +137,13 @@ Use information:
 - `zoomRange`: The zoom range for which the template html is used. The values for each `zoomRange` within a `query` should be continuous with ascending values. The minimum value of all `zoomRange` within a `query` specifies when to toggle between `altColor` and `defaultColor`. The largest `zoomRange` should be arbitrarily large.
 
 - Cytoscape data can be accessed within html using `#{data.prop}` where prop is some cytoscape node data property.
+
+- The parent `div` should follow: `<div id="htmlLabel:#{data.id}"></div>`
+
+Style suggestions:
+
+- The width and height of the parent html-node `div` should be specified.
+
+- The parent html-node `div` should be centered.
+
+- Either content should not exceed the height of the parent html-node `div` or overflow should be managed .
