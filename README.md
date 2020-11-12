@@ -53,6 +53,7 @@ Example:
 ```js
 import cytoscape from 'cytoscape';
 import { register as htmlnode } from 'cytoscape-html-node';
+var nodeHtmlLabel = require('cytoscape-node-html-label');
 
 // register extensions
 cytoscape.use(htmlnode);
