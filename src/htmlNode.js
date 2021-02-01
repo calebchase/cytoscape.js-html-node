@@ -69,10 +69,9 @@ export function loadHtmlNode() {
 
   // Removes html label for corresponding cytoscape node
   function removeHtmlLabel(htmlId) {
-    try {
-      document.getElementById(`htmlLabel:${htmlId}`).parentElement.remove();
-    } catch (error) {
-      console.error('Unable to remove: ', htmlId);
+    let target = document.getElementById(`htmlLabel:${htmlId}`);
+    if (target != null) {
+      target.parentElement.parentElement.remove();
     }
   }
 
@@ -120,7 +119,10 @@ export function loadHtmlNode() {
             }
 
             if (altColorSet) {
-              cy.style().selector(query).style('background-color', defaultColor).update();
+              cy.batch(() => {
+                cy.style().selector(query).style('background-color', defaultColor).update();
+              });
+
               altColorSet = false;
             }
             htmlRemoved = false;
