@@ -1,6 +1,6 @@
 import cytoscape from 'cytoscape';
-import { register as htmlnode } from '../dist/main.bundle.js';
-//import { register as htmlnode } from './index.js';
+//import { register as htmlnode } from '../dist/main.bundle.js';
+import { register as htmlnode } from './index.js';
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
 
@@ -252,6 +252,58 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   }));
 
+  // Manual postions for demo without layout
+  cy.getElementById('a').position('x', 10 + 650);
+  cy.getElementById('a').position('y', 10 + 350);
+
+  cy.getElementById('aC').position('x', 10 + 650 - 45);
+  cy.getElementById('aC').position('y', 40 + 350 + 100);
+
+  cy.getElementById('aT').position('x', 10 + 650 + 45);
+  cy.getElementById('aT').position('y', 40 + 350 + 100);
+
+  cy.getElementById('b').position('x', 10 + 850);
+  cy.getElementById('b').position('y', 10 + 350);
+
+  cy.getElementById('bC').position('x', 10 + 850 - 45);
+  cy.getElementById('bC').position('y', 40 + 350 + 100);
+
+  cy.getElementById('bT').position('x', 10 + 850 + 45);
+  cy.getElementById('bT').position('y', 40 + 350 + 100);
+
+  cy.getElementById('f').position('x', 10 + 850);
+  cy.getElementById('f').position('y', 10 + 200);
+
+  cy.getElementById('c').position('x', 10 + 1050);
+  cy.getElementById('c').position('y', 10 + 350);
+
+  cy.getElementById('cT').position('x', 10 + 1050 - 45);
+  cy.getElementById('cT').position('y', 40 + 350 + 100);
+
+  cy.getElementById('cB').position('x', 10 + 1050 + 45);
+  cy.getElementById('cB').position('y', 40 + 350 + 100);
+
+  cy.getElementById('g').position('x', 10 + 1050);
+  cy.getElementById('g').position('y', 10 + 200);
+
+  cy.getElementById('d').position('x', 10 + 1250);
+  cy.getElementById('d').position('y', 10 + 350);
+
+  cy.getElementById('dC').position('x', 10 + 1250 - 45);
+  cy.getElementById('dC').position('y', 40 + 350 + 100);
+
+  cy.getElementById('dB').position('x', 10 + 1250 + 45);
+  cy.getElementById('dB').position('y', 40 + 350 + 100);
+
+  cy.getElementById('e').position('x', 10 + 1450);
+  cy.getElementById('e').position('y', 10 + 350);
+
+  cy.getElementById('eC').position('x', 10 + 1450 - 45);
+  cy.getElementById('eC').position('y', 40 + 350 + 100);
+
+  cy.getElementById('eB').position('x', 10 + 1450 + 45);
+  cy.getElementById('eB').position('y', 40 + 350 + 100);
+
   const htmlnode = cy.htmlnode();
 
   htmlnode.createHtmlNode(cy, {
@@ -265,8 +317,9 @@ document.addEventListener('DOMContentLoaded', function () {
           template: {
             html: `<div id="htmlLabel:#{data.id}" class="">
                       <div class=" largeFont">#{data.longName}</div>
+                      <img src="#{data.image}">
                     </div>`,
-            cssClass: 'htmlCard',
+            cssClass: 'htmlPerson',
           },
         },
         {
@@ -277,10 +330,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         <i class="material-icons iconHeight">person</i>
                         <span class="">#{data.shortName}</span>
                       </div>
+                      <img src="#{data.image}">
 
                       <div class="">#{data.shortSum}</div>
                     </div>`,
-            cssClass: 'htmlCard',
+            cssClass: 'htmlPerson',
           },
         },
         {
@@ -291,9 +345,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         <i class="material-icons iconHeight smallFont">person</i>
                         <span class="smallFont">#{data.longName}</span>
                       </div>
+                      <img src="#{data.image}">
                       <div class="smallFont">#{data.longSum}</div>
                     </div>`,
-            cssClass: 'htmlCard',
+            cssClass: 'htmlPerson',
           },
         },
       ],
@@ -385,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <i style="color:darkgreen"class="material-icons iconHeight smallFont">#{data.icon}</i>
                         <span class="smallFont cardFeild">#{data.identifierTitle}</span>
                       </div>
-
+                      
                       <div class="smallFont">#{data.longSum}</div>
                     </div>`,
             cssClass: 'htmlidentifier',
