@@ -18,22 +18,25 @@
   ],
   "keywords": [
     "cytoscape",
+    "extension",
     "html",
     "node"
   ],
   "license": "ISC",
   "scripts": {
     "start": "webpack serve --config webpack.config.js",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --mode development --config webpack.config.js",
+    "build:release": "webpack --mode production --config webpack.config.js"
   },
   "devDependencies": {
     "prettier": "^2.1.2",
-    "webpack": "^5.3.2",
-    "webpack-cli": "^4.1.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack": "^5.19.0",
+    "webpack-cli": "^4.4.0"
   },
   "dependencies": {
-    "cytoscape": "^3.16.3",
     "cytoscape-node-html-label": "^1.2.1"
+  },
+  "peerDependencies": {
+    "cytoscape": "^3.18.0"
   }
 }
