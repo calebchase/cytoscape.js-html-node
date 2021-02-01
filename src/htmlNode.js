@@ -1,14 +1,17 @@
 export function loadHtmlNode() {
-  function resizeCard() {
+  function resizeCard(cy) {
     let div;
     let found = false;
+
     cy.batch(function () {
       cy.nodes().forEach(function (ele) {
         div = document.getElementById(`htmlLabel:${ele.id()}`);
+
         if (div != null) {
           found = true;
           let width = div.parentElement.offsetWidth;
           let height = div.parentElement.offsetHeight;
+
           cy.style()
             .selector('[id = "' + ele.id() + '"]')
             .style('width', width)
@@ -20,11 +23,12 @@ export function loadHtmlNode() {
     return found;
   }
 
-  window.onload = resizeCard;
+  window.onload = () => resizeCard(cy);
 
   // Sets starting html for labels based on cytoscape zoom level
   function intializeCardHtml(cy, templates, query) {
     let cyZoom = cy.zoom();
+
     for (let i = 0; i < templates.length; i++) {
       if (cyZoom >= templates[i].zoomRange[0] && cyZoom < templates[i].zoomRange[1]) {
         setCardData(cy, templates[i].template, query);
@@ -36,9 +40,11 @@ export function loadHtmlNode() {
   // Replaces string targets with cytoscape node data
   function getCardHtml(data, cardData) {
     let htmlString = cardData.html;
+    let dataProp;
+
     let final = htmlString.replaceAll(/#{.*?}/g, (target) => {
       // '#{data.prop}' => 'prop'
-      let dataProp = target.substring(7, target.length - 1);
+      dataProp = target.substring(7, target.length - 1);
       return data[dataProp];
     });
     return final;
@@ -73,9 +79,9 @@ export function loadHtmlNode() {
   // Removes html labels for corresponding cytoscape query
   function removeHtmlLabels(cy, query) {
     let cyNodes = cy.elements(query);
-    let i;
     let length = cyNodes.length;
-    for (i = 0; i < length; i++) {
+
+    for (let i = 0; i < length; i++) {
       removeHtmlLabel(cyNodes[i].id());
     }
   }
@@ -90,7 +96,7 @@ export function loadHtmlNode() {
 
     cy.on('zoom', function (evt) {
       if (rcard) {
-        resizeCard();
+        resizeCard(cy);
         rcard = false;
       }
 
@@ -108,6 +114,7 @@ export function loadHtmlNode() {
           if (cy.zoom() > templates[i].zoomRange[0] && cy.zoom() < templates[i].zoomRange[1]) {
             setCardData(cy, templates[i].template, query);
             curZoomRange = templates[i].zoomRange;
+
             if (!htmlRemoved) {
               removeHtmlLabels(cy, query);
             }
@@ -134,6 +141,7 @@ export function loadHtmlNode() {
         templates[key].altColor
       );
     }
+    console.log('cytoscape.js-html-node loaded');
   }
   return {
     createHtmlNode: createHtmlNode,
