@@ -1,0 +1,35 @@
+{
+  "name": "cytoscape-html-node-example",
+  "version": "1.0.0",
+  "description": "Example project demonstrating the use of cytoscape-html-node.",
+  "main": "src/example.js",
+  "scripts": {
+    "start": "webpack serve --mode development --config webpack.config.js"
+  },
+  "keywords": [
+    "cytoscape",
+    "extension",
+    "example",
+    "cytoscape-html-node"
+  ],
+  "author": {
+    "name": "VARLAB - University of Central Florida",
+    "url": "https://cs.ucf.edu"
+  },
+  "contributors": [
+    {
+      "name": "Caleb Chase"
+    }
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.19.0",
+    "webpack-cli": "^4.4.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "cytoscape": "^3.18.0",
+    "cytoscape-html-node": "file:..",
+    "cytoscape-node-html-label": "^1.2.2"
+  }
+}

@@ -1,6 +1,5 @@
 import cytoscape from 'cytoscape';
-//import { register as htmlnode } from '../dist/main.bundle.js';
-import { register as htmlnode } from './index.js';
+import { register as htmlnode } from 'cytoscape-html-node';
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
 
@@ -41,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'person',
             longName: 'Dean Keaton',
             shortName: 'Keaton',
-            image: './examplePics/dKeaton.png',
+            image: 'images/dKeaton.png',
             shortSum: 'Ex police officer.  In relationship with a lawyer.',
             longSum:
               'Indicted for corruption. Currently in a relationship with a lawyer. No recent infractions.',
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'person',
             longName: 'Roger Kint',
             shortName: 'Kint',
-            image: './examplePics/rKint.png',
+            image: 'images/rKint.png',
             shortSum: 'Disabled. Witness to incident. Manipulator.',
             longSum:
               'Physically disabled. Expert at verbal manipulation. Only conscious witness to incident.',
@@ -67,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'person',
             longName: 'Fred Fenster',
             shortName: 'Fenster',
-            image: './examplePics/fFenster.png',
+            image: 'images/fFenster.png',
             shortSum: 'Works with McManus. Killed by Söze.',
             longSum: 'This a long summary that includes more background info to show.',
           },
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'person',
             longName: 'Todd Hockney',
             shortName: 'Hockney',
-            image: './examplePics/tHockney.png',
+            image: 'images/tHockney.png',
             shortSum: 'Auto mechanic. Knowledgeable with explosives.',
             longSum: 'This a long summary that includes more background info to show.',
           },
@@ -91,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'person',
             longName: 'Mike McManus',
             shortName: 'McManus',
-            image: './examplePics/mMcManus.png',
+            image: 'images/mMcManus.png',
             shortSum: 'Works with Fenster. Proposes heist. ',
             longSum: 'This a long summary that includes more background info to show.',
           },
@@ -426,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function () {
           template: {
             html: `<div id="htmlLabel:#{data.id}" >
                       <div>#{data.identifierTitle}</div>
-                      <i style="color:darkgreen;"class="material-icons font">#{data.icon}</i>
+                      <i style="color:darkgreen;" class="material-icons font">#{data.icon}</i>
                       <div>#{data.shortSum}</div>
                     </div>`,
             cssClass: 'htmlidentifier',
@@ -437,8 +436,8 @@ document.addEventListener('DOMContentLoaded', function () {
           template: {
             html: `<div id="htmlLabel:#{data.id}" >
                       <div>
-                        <i style="color:darkgreen"class="material-icons iconHeight smallFont">#{data.icon}</i>
-                        <span class="smallFont cardFeild">#{data.identifierTitle}</span>
+                        <i style="color:darkgreen;" class="material-icons iconHeight smallFont">#{data.icon}</i>
+                        <span class="smallFont cardField">#{data.identifierTitle}</span>
                       </div>
                       
                       <div class="smallFont">#{data.longSum}</div>
