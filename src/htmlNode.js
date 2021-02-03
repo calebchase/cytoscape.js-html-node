@@ -72,16 +72,20 @@ export function loadHtmlNode() {
     let target = document.getElementById(`htmlLabel:${htmlId}`);
     if (target != null) {
       target.parentElement.parentElement.remove();
+      return true;
     }
+    return false;
   }
 
   // Removes html labels for corresponding cytoscape query
   function removeHtmlLabels(cy, query) {
     let cyNodes = cy.elements(query);
     let length = cyNodes.length;
+    let found = false;
 
     for (let i = 0; i < length; i++) {
-      removeHtmlLabel(cyNodes[i].id());
+      found = removeHtmlLabel(cyNodes[i].id());
+      if (found) return;
     }
   }
 
@@ -143,7 +147,7 @@ export function loadHtmlNode() {
         templates[key].altColor
       );
     }
-    console.log('cytoscape.js-html-node loaded');
+    console.log('cytoscape.js-html-node: loaded');
   }
   return {
     createHtmlNode: createHtmlNode,
