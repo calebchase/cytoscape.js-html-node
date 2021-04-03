@@ -1,6 +1,6 @@
 import cytoscape from 'cytoscape';
-import { register as htmlnode } from 'cytoscape-html-node';
-
+//import { register as htmlnode } from 'cytoscape-html-node';
+import { register as htmlnode } from '../../src/index.js';
 var nodeHtmlLabel = require('cytoscape-node-html-label');
 
 cytoscape.use(htmlnode);
@@ -29,6 +29,18 @@ document.addEventListener('DOMContentLoaded', function () {
         style: {
           'curve-style': 'bezier',
           'target-arrow-shape': 'triangle',
+        },
+      },
+      {
+        selector: '.baseStyle',
+        style: {
+          'background-color': 'lightgrey',
+        },
+      },
+      {
+        selector: '.altStyle',
+        style: {
+          'background-color': 'darkblue',
         },
       },
     ],
@@ -247,61 +259,85 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     layout: {
       name: 'grid',
-      spacingFactor: 0.5,
+      spacingFactor: 30,
     },
   }));
 
   // Manual postions for demo without layout
-  cy.getElementById('a').position('x', 10 + 650);
-  cy.getElementById('a').position('y', 10 + 350);
+  // cy.getElementById('a').position('x', 10 + 650);
+  // cy.getElementById('a').position('y', 10 + 350);
 
-  cy.getElementById('aC').position('x', 10 + 650 - 45);
-  cy.getElementById('aC').position('y', 40 + 350 + 100);
+  // cy.getElementById('aC').position('x', 10 + 650 - 45);
+  // cy.getElementById('aC').position('y', 40 + 350 + 100);
 
-  cy.getElementById('aT').position('x', 10 + 650 + 45);
-  cy.getElementById('aT').position('y', 40 + 350 + 100);
+  // cy.getElementById('aT').position('x', 10 + 650 + 45);
+  // cy.getElementById('aT').position('y', 40 + 350 + 100);
 
-  cy.getElementById('b').position('x', 10 + 850);
-  cy.getElementById('b').position('y', 10 + 350);
+  // cy.getElementById('b').position('x', 10 + 850);
+  // cy.getElementById('b').position('y', 10 + 350);
 
-  cy.getElementById('bC').position('x', 10 + 850 - 45);
-  cy.getElementById('bC').position('y', 40 + 350 + 100);
+  // cy.getElementById('bC').position('x', 10 + 850 - 45);
+  // cy.getElementById('bC').position('y', 40 + 350 + 100);
 
-  cy.getElementById('bT').position('x', 10 + 850 + 45);
-  cy.getElementById('bT').position('y', 40 + 350 + 100);
+  // cy.getElementById('bT').position('x', 10 + 850 + 45);
+  // cy.getElementById('bT').position('y', 40 + 350 + 100);
 
-  cy.getElementById('f').position('x', 10 + 850);
-  cy.getElementById('f').position('y', 10 + 200);
+  // cy.getElementById('f').position('x', 10 + 850);
+  // cy.getElementById('f').position('y', 10 + 200);
 
-  cy.getElementById('c').position('x', 10 + 1050);
-  cy.getElementById('c').position('y', 10 + 350);
+  // cy.getElementById('c').position('x', 10 + 1050);
+  // cy.getElementById('c').position('y', 10 + 350);
 
-  cy.getElementById('cT').position('x', 10 + 1050 - 45);
-  cy.getElementById('cT').position('y', 40 + 350 + 100);
+  // cy.getElementById('cT').position('x', 10 + 1050 - 45);
+  // cy.getElementById('cT').position('y', 40 + 350 + 100);
 
-  cy.getElementById('cB').position('x', 10 + 1050 + 45);
-  cy.getElementById('cB').position('y', 40 + 350 + 100);
+  // cy.getElementById('cB').position('x', 10 + 1050 + 45);
+  // cy.getElementById('cB').position('y', 40 + 350 + 100);
 
-  cy.getElementById('g').position('x', 10 + 1050);
-  cy.getElementById('g').position('y', 10 + 200);
+  // cy.getElementById('g').position('x', 10 + 1050);
+  // cy.getElementById('g').position('y', 10 + 200);
 
-  cy.getElementById('d').position('x', 10 + 1250);
-  cy.getElementById('d').position('y', 10 + 350);
+  // cy.getElementById('d').position('x', 10 + 1250);
+  // cy.getElementById('d').position('y', 10 + 350);
 
-  cy.getElementById('dC').position('x', 10 + 1250 - 45);
-  cy.getElementById('dC').position('y', 40 + 350 + 100);
+  // cy.getElementById('dC').position('x', 10 + 1250 - 45);
+  // cy.getElementById('dC').position('y', 40 + 350 + 100);
 
-  cy.getElementById('dB').position('x', 10 + 1250 + 45);
-  cy.getElementById('dB').position('y', 40 + 350 + 100);
+  // cy.getElementById('dB').position('x', 10 + 1250 + 45);
+  // cy.getElementById('dB').position('y', 40 + 350 + 100);
 
-  cy.getElementById('e').position('x', 10 + 1450);
-  cy.getElementById('e').position('y', 10 + 350);
+  // cy.getElementById('e').position('x', 10 + 1450);
+  // cy.getElementById('e').position('y', 10 + 350);
 
-  cy.getElementById('eC').position('x', 10 + 1450 - 45);
-  cy.getElementById('eC').position('y', 40 + 350 + 100);
+  // cy.getElementById('eC').position('x', 10 + 1450 - 45);
+  // cy.getElementById('eC').position('y', 40 + 350 + 100);
 
-  cy.getElementById('eB').position('x', 10 + 1450 + 45);
-  cy.getElementById('eB').position('y', 40 + 350 + 100);
+  // cy.getElementById('eB').position('x', 10 + 1450 + 45);
+  // cy.getElementById('eB').position('y', 40 + 350 + 100);
+
+  let picArray = [
+    'images/rKint.png',
+    'images/fFenster.png',
+    'images/mMcManus.png',
+    'images/tHockney.png',
+    'images/user-solid.svg',
+  ];
+
+  let picArrayh = ['images/hd1.jpg', 'images/hd2.jpg', 'images/hd3.jpg', 'images/hd4.jpg'];
+
+  for (let i = 0; i < 200; i++) {
+    cy.add({
+      group: 'nodes',
+      data: {
+        type: 'person',
+        longName: 'Roger Kint',
+        shortName: 'Kint',
+        image: picArray[Math.floor(Math.random() * picArray.length)],
+      },
+    });
+  }
+  var layout = cy.layout({ name: 'grid', spacingFactor: 2 });
+  layout.run();
 
   const htmlnode = cy.htmlnode();
 

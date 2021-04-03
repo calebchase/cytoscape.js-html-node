@@ -13,7 +13,7 @@ export function loadHtmlNode() {
           let height = div.parentElement.offsetHeight;
 
           cy.style()
-            .selector('[id = "' + ele.id() + '"]')
+            .selector('[id = "' + ele.id() + '  "]')
             .style('width', width)
             .style('height', height)
             .update();
@@ -44,7 +44,7 @@ export function loadHtmlNode() {
 
     let final = htmlString.replaceAll(/#{.*?}/g, (target) => {
       // '#{data.prop}' => 'prop'
-      dataProp = target.substring(7, target.length - 1);
+      dataProp = target.substring('#{data.'.length, target.length - 1);
       return data[dataProp];
     });
     return final;
@@ -107,8 +107,11 @@ export function loadHtmlNode() {
         removeHtmlLabels(cy, query);
         htmlRemoved = true;
         curZoomRange = [0, templates[0].zoomRange[0]];
-
-        cy.style().selector(query).style('background-color', altColor).update();
+        cy.batch(() => {
+          cy.$(query).addClass('altStyle');
+          cy.$(query).removeClass('baseStyle');
+          //cy.style().selector(query).style('background-color', altColor).update();
+        });
         altColorSet = true;
       }
 
@@ -124,7 +127,9 @@ export function loadHtmlNode() {
 
             if (altColorSet) {
               cy.batch(() => {
-                cy.style().selector(query).style('background-color', defaultColor).update();
+                cy.$(query).removeClass('altStyle');
+                cy.$(query).addClass('baseStyle');
+                //cy.style().selector(query).style('background-color', defaultColor).update();
               });
 
               altColorSet = false;
