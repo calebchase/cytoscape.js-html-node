@@ -1,5 +1,6 @@
 export function loadHtmlNode() {
   function resizeCard(cy) {
+    console.log('here');
     let div;
     let found = false;
 
@@ -12,11 +13,10 @@ export function loadHtmlNode() {
           let width = div.parentElement.offsetWidth;
           let height = div.parentElement.offsetHeight;
 
-          cy.style()
-            .selector('[id = "' + ele.id() + '  "]')
-            .style('width', width)
-            .style('height', height)
-            .update();
+          ele.style({
+            width: width,
+            height: height,
+          });
         }
       });
     });
@@ -91,18 +91,13 @@ export function loadHtmlNode() {
 
   let rcard = true;
   // Set html labels based on templates, sets cytoscape zoom to change html based on cytoscape zoom level
-  function setTemplate(cy, templates, query, defaultColor, altColor) {
+  function setTemplate(cy, templates, query) {
     let curZoomRange = intializeCardHtml(cy, templates, query);
     let minZoom = templates[0].zoomRange[0];
     let htmlRemoved = false;
     let altColorSet = false;
 
     cy.on('zoom', function (evt) {
-      if (rcard) {
-        resizeCard(cy);
-        rcard = false;
-      }
-
       if (cy.zoom() < minZoom && !htmlRemoved) {
         removeHtmlLabels(cy, query);
         htmlRemoved = true;
@@ -119,6 +114,7 @@ export function loadHtmlNode() {
         for (let i = 0; i < templates.length; i++) {
           if (cy.zoom() > templates[i].zoomRange[0] && cy.zoom() < templates[i].zoomRange[1]) {
             setCardData(cy, templates[i].template, query);
+            resizeCard(cy);
             curZoomRange = templates[i].zoomRange;
 
             if (!htmlRemoved) {
