@@ -1,10 +1,11 @@
 import cytoscape from 'cytoscape';
 //import { register as htmlnode } from 'cytoscape-html-node';
 import { register as htmlnode } from '../../src/index.js';
+//import { register as htmlnode } from '../../dist/main.bundle.js';
+
 var nodeHtmlLabel = require('cytoscape-node-html-label');
 
 cytoscape.use(htmlnode);
-nodeHtmlLabel(cytoscape);
 
 document.addEventListener('DOMContentLoaded', function () {
   var cy = (window.cy = cytoscape({
@@ -32,13 +33,13 @@ document.addEventListener('DOMContentLoaded', function () {
         },
       },
       {
-        selector: '.baseStyle',
+        selector: '.htmlNodeBaseStyle',
         style: {
           'background-color': 'lightgrey',
         },
       },
       {
-        selector: '.altStyle',
+        selector: '.htmlNodeAltStyle',
         style: {
           'background-color': 'darkblue',
         },
@@ -263,58 +264,6 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   }));
 
-  // Manual postions for demo without layout
-  // cy.getElementById('a').position('x', 10 + 650);
-  // cy.getElementById('a').position('y', 10 + 350);
-
-  // cy.getElementById('aC').position('x', 10 + 650 - 45);
-  // cy.getElementById('aC').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('aT').position('x', 10 + 650 + 45);
-  // cy.getElementById('aT').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('b').position('x', 10 + 850);
-  // cy.getElementById('b').position('y', 10 + 350);
-
-  // cy.getElementById('bC').position('x', 10 + 850 - 45);
-  // cy.getElementById('bC').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('bT').position('x', 10 + 850 + 45);
-  // cy.getElementById('bT').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('f').position('x', 10 + 850);
-  // cy.getElementById('f').position('y', 10 + 200);
-
-  // cy.getElementById('c').position('x', 10 + 1050);
-  // cy.getElementById('c').position('y', 10 + 350);
-
-  // cy.getElementById('cT').position('x', 10 + 1050 - 45);
-  // cy.getElementById('cT').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('cB').position('x', 10 + 1050 + 45);
-  // cy.getElementById('cB').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('g').position('x', 10 + 1050);
-  // cy.getElementById('g').position('y', 10 + 200);
-
-  // cy.getElementById('d').position('x', 10 + 1250);
-  // cy.getElementById('d').position('y', 10 + 350);
-
-  // cy.getElementById('dC').position('x', 10 + 1250 - 45);
-  // cy.getElementById('dC').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('dB').position('x', 10 + 1250 + 45);
-  // cy.getElementById('dB').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('e').position('x', 10 + 1450);
-  // cy.getElementById('e').position('y', 10 + 350);
-
-  // cy.getElementById('eC').position('x', 10 + 1450 - 45);
-  // cy.getElementById('eC').position('y', 40 + 350 + 100);
-
-  // cy.getElementById('eB').position('x', 10 + 1450 + 45);
-  // cy.getElementById('eB').position('y', 40 + 350 + 100);
-
   let picArray = [
     'images/rKint.png',
     'images/fFenster.png',
@@ -341,11 +290,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const htmlnode = cy.htmlnode();
 
-  htmlnode.createHtmlNode(cy, {
+  htmlnode.createHtmlNode(cytoscape, cy, {
     person: {
       query: "[type = 'person']",
-      defaultColor: 'lightGrey',
-      altColor: 'darkBlue',
       template: [
         {
           zoomRange: [0.3, 1],
@@ -391,8 +338,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     event: {
       query: "[type = 'event']",
-      defaultColor: 'lightGrey',
-      altColor: 'darkRed',
       template: [
         {
           zoomRange: [0.3, 1],
@@ -443,8 +388,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     identifier: {
       query: "[type = 'identifier']",
-      defaultColor: 'lightGrey',
-      altColor: 'darkGreen',
       template: [
         {
           zoomRange: [0.3, 1],
