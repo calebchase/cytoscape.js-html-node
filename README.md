@@ -53,17 +53,29 @@ Example:
 ```js
 import cytoscape from 'cytoscape';
 import { register as htmlnode } from 'cytoscape-html-node';
-var nodeHtmlLabel = require('cytoscape-node-html-label');
 
 // register extensions
 cytoscape.use(htmlnode);
-nodeHtmlLabel(cytoscape);
 
 let cy = cytoscape({
   container: document.getElementById('cy'),
   layout: {
     name: 'random',
   },
+  style: [
+    {
+      selector: '.htmlNodeBaseStyle',
+      style: {
+        'background-color': 'lightgrey',
+      },
+    },
+    {
+      selector: '.htmlNodeAltStyle',
+      style: {
+        'background-color': 'darkblue',
+      },
+    },
+  ],
   elements: [
     {
       group: 'nodes',
@@ -106,11 +118,9 @@ let cy = cytoscape({
 
 const htmlnode = cy.htmlnode();
 
-htmlnode.createHtmlNode(cy, {
+htmlnode.createHtmlNode(cytoscape, cy, {
   person: {
     query: "[type = 'person']",
-    defaultColor: 'lightGrey',
-    altColor: 'darkBlue',
     template: [
       {
         zoomRange: [0.3, 1],
@@ -144,8 +154,6 @@ htmlnode.createHtmlNode(cy, {
 
   event: {
     query: "[type = 'event']",
-    defaultColor: 'lightGrey',
-    altColor: 'darkRed',
     template: [
       {
         zoomRange: [0.3, 1],
@@ -181,11 +189,13 @@ htmlnode.createHtmlNode(cy, {
 
 Use information:
 
+- For a detailed example, see `example/src/example.js`
+
 - `query`: Accepts any cytoscape query. Specifies which node(s)`template` will apply to.
 
-- `defaultColor`: The color of the cytoscape node(s) when zoom has not passed the minimum `zoomRange` value.
+- `htmlNodeBaseStyle`: The style of the cytoscape node(s) when zoom has not passed the minimum `zoomRange` value.
 
-- `altColor`: The color of the cytoscape node(s) when zoom has passed the minimum `zoomRange` value.
+- `htmlNodeAltStyle`: The style of the cytoscape node(s) when zoom has passed the minimum `zoomRange` value.
 
 - `zoomRange`: The zoom range for which the template html is used. The values for each `zoomRange` within a `query` should be continuous with ascending values. The minimum value of all `zoomRange` within a `query` specifies when to toggle between `altColor` and `defaultColor`. The largest `zoomRange` should be arbitrarily large.
 
