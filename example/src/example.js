@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let picArrayh = ['images/hd1.jpg', 'images/hd2.jpg', 'images/hd3.jpg', 'images/hd4.jpg'];
 
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 20; i++) {
     cy.add({
       group: 'nodes',
       data: {

@@ -52,6 +52,7 @@ export function loadHtmlNode() {
 
   // Call to nodeHtmlLabel, displays html
   function setCardData(cy, cardData, query) {
+    console.log(cy);
     cy.nodeHtmlLabel([
       {
         query: query, // cytoscape query selector
@@ -97,7 +98,21 @@ export function loadHtmlNode() {
     let htmlRemoved = false;
     let altColorSet = false;
 
+    if (cy.zoom() < minZoom && !htmlRemoved) {
+      removeHtmlLabels(cy, query);
+      htmlRemoved = true;
+      curZoomRange = [0, templates[0].zoomRange[0]];
+      cy.batch(() => {
+        cy.$(query).addClass('altStyle');
+        cy.$(query).removeClass('baseStyle');
+        //cy.style().selector(query).style('background-color', altColor).update();
+      });
+      altColorSet = true;
+    }
+
     cy.on('zoom', function (evt) {
+      cy.removeListener('data');
+      cy.removeListener('style');
       if (cy.zoom() < minZoom && !htmlRemoved) {
         removeHtmlLabels(cy, query);
         htmlRemoved = true;
@@ -139,6 +154,10 @@ export function loadHtmlNode() {
   }
 
   function createHtmlNode(cy, templates) {
+    function updateDataOrStyleCyHandler() {
+      () => {};
+    }
+
     for (let key in templates) {
       setTemplate(
         cy,
@@ -148,6 +167,7 @@ export function loadHtmlNode() {
         templates[key].altColor
       );
     }
+
     console.log('cytoscape.js-html-node: loaded');
   }
   return {
