@@ -173,7 +173,7 @@ export function loadHtmlNode() {
       );
     }
   }
-  console.log('cytoscape.js-html-node loaded');
+  console.log('cytoscape.js-html-node loaded.');
   return {
     createHtmlNode: createHtmlNode,
   };
