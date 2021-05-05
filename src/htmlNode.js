@@ -1,6 +1,9 @@
+//import nodeHtmlLabel from './cytoscape-node-html-label'
+
+var nodeHtmlLabel = require('./cytoscape-node-html-label');
+
 export function loadHtmlNode() {
   function resizeCard(cy) {
-    console.log('here');
     let div;
     let found = false;
 
@@ -52,7 +55,6 @@ export function loadHtmlNode() {
 
   // Call to nodeHtmlLabel, displays html
   function setCardData(cy, cardData, query) {
-    console.log(cy);
     cy.nodeHtmlLabel([
       {
         query: query, // cytoscape query selector
@@ -103,8 +105,8 @@ export function loadHtmlNode() {
       htmlRemoved = true;
       curZoomRange = [0, templates[0].zoomRange[0]];
       cy.batch(() => {
-        cy.$(query).addClass('altStyle');
-        cy.$(query).removeClass('baseStyle');
+        cy.$(query).addClass('htmlNodeAltStyle');
+        cy.$(query).removeClass('htmlNodeBaseStyle');
         //cy.style().selector(query).style('background-color', altColor).update();
       });
       altColorSet = true;
@@ -113,13 +115,15 @@ export function loadHtmlNode() {
     cy.on('zoom', function (evt) {
       cy.removeListener('data');
       cy.removeListener('style');
+
       if (cy.zoom() < minZoom && !htmlRemoved) {
         removeHtmlLabels(cy, query);
         htmlRemoved = true;
         curZoomRange = [0, templates[0].zoomRange[0]];
+
         cy.batch(() => {
-          cy.$(query).addClass('altStyle');
-          cy.$(query).removeClass('baseStyle');
+          cy.$(query).addClass('htmlNodeAltStyle');
+          cy.$(query).removeClass('htmlNodeBaseStyle');
           //cy.style().selector(query).style('background-color', altColor).update();
         });
         altColorSet = true;
@@ -138,11 +142,10 @@ export function loadHtmlNode() {
 
             if (altColorSet) {
               cy.batch(() => {
-                cy.$(query).removeClass('altStyle');
-                cy.$(query).addClass('baseStyle');
+                cy.$(query).removeClass('htmlNodeAltStyle');
+                cy.$(query).addClass('htmlNodeBaseStyle');
                 //cy.style().selector(query).style('background-color', defaultColor).update();
               });
-
               altColorSet = false;
             }
             htmlRemoved = false;
@@ -153,7 +156,9 @@ export function loadHtmlNode() {
     });
   }
 
-  function createHtmlNode(cy, templates) {
+  function createHtmlNode(cytoscape, cy, templates) {
+    nodeHtmlLabel(cytoscape);
+
     function updateDataOrStyleCyHandler() {
       () => {};
     }
@@ -167,8 +172,6 @@ export function loadHtmlNode() {
         templates[key].altColor
       );
     }
-
-    console.log('cytoscape.js-html-node: loaded');
   }
   return {
     createHtmlNode: createHtmlNode,
