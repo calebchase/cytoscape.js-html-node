@@ -1,6 +1,6 @@
 import cytoscape from 'cytoscape';
-//import { register as htmlnode } from 'cytoscape-html-node';
-import { register as htmlnode } from '../../src/index.js';
+import { register as htmlnode } from 'cytoscape-html-node';
+//import { register as htmlnode } from '../../src/index.js';
 //import { register as htmlnode } from '../../dist/main.bundle.js';
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
