@@ -156,7 +156,6 @@ export function loadHtmlNode() {
       newNodeSet.add(evt.target.id());
 
       cy.on('render a', function () {
-        console.log(evt.target.id());
         updateNodesOnRender(cy, newNodeSet);
         if (templates[curretnIndex] != undefined) {
           updateCardData(cy, templates[i].template, `node#${evt.target.id()}`);
@@ -225,7 +224,7 @@ export function loadHtmlNode() {
     } catch {}
   }
 
-  console.log('cytoscape.js-html-node : loaded');
+  //console.log('cytoscape.js-html-node - loaded');
 
   return {
     createHtmlNode: createHtmlNode,
