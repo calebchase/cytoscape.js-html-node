@@ -1,7 +1,7 @@
 import cytoscape from 'cytoscape';
-import { register as htmlnode } from 'cytoscape-html-node';
+//import { register as htmlnode } from 'cytoscape-html-node';
 //import { register as htmlnode } from '../../src/index.js';
-//import { register as htmlnode } from '../../dist/main.bundle.js';
+import { register as htmlnode } from '../../dist/main.bundle.js';
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
 
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let picArrayh = ['images/hd1.jpg', 'images/hd2.jpg', 'images/hd3.jpg', 'images/hd4.jpg'];
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 500; i++) {
     cy.add({
       group: 'nodes',
       data: {
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function () {
           template: {
             html: `<div id="htmlLabel:#{data.id}" class="">
                       <div class=" largeFont">#{data.longName}</div>
-                      <img src="#{data.image}">
+                      <img src="#{data.image}" loading="lazy">
                     </div>`,
             cssClass: 'htmlPerson',
           },
@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <i class="material-icons iconHeight">person</i>
                         <span class="">#{data.shortName}</span>
                       </div>
-                      <img src="#{data.image}">
+                      <img src="#{data.image}" loading="lazy">
 
                       <div class="">#{data.shortSum}</div>
                     </div>`,
@@ -327,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <i class="material-icons iconHeight smallFont">person</i>
                         <span class="smallFont">#{data.longName}</span>
                       </div>
-                      <img src="#{data.image}">
+                      <img src="#{data.image}" loading="lazy">
                       <div class="smallFont">#{data.longSum}</div>
                     </div>`,
             cssClass: 'htmlPerson',

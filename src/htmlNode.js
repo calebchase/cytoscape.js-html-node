@@ -10,15 +10,12 @@ export function loadHtmlNode() {
     cy.batch(function () {
       cy.nodes().forEach(function (ele) {
         div = document.getElementById(`htmlLabel:${ele.id()}`);
-
         if (div != null) {
           found = true;
-          let width = div.parentElement.offsetWidth;
-          let height = div.parentElement.offsetHeight;
 
           ele.style({
-            width: width,
-            height: height,
+            width: div.parentElement.offsetWidth,
+            height: div.parentElement.offsetHeight,
           });
         }
       });
@@ -34,7 +31,9 @@ export function loadHtmlNode() {
 
     for (let i = 0; i < templates.length; i++) {
       if (cyZoom >= templates[i].zoomRange[0] && cyZoom < templates[i].zoomRange[1]) {
+        templates[i].htmlSet = true;
         setCardData(cy, templates[i].template, query);
+
         return templates[i].zoomRange;
       }
     }
@@ -53,7 +52,17 @@ export function loadHtmlNode() {
     return final;
   }
 
-  // Call to nodeHtmlLabel, displays html
+  function updateCardData(cy, cardData, query) {
+    cy.nodes(query).forEach(function (ele) {
+      let div = document.getElementById(`htmlLabel:${ele.id()}`);
+
+      if (div != null) {
+        div.innerHTML = getCardHtml(ele.data(), cardData);
+      }
+    });
+  }
+
+  // Call to nodeHtmlLabel, displays htm
   function setCardData(cy, cardData, query) {
     cy.nodeHtmlLabel([
       {
@@ -74,7 +83,7 @@ export function loadHtmlNode() {
   function removeHtmlLabel(htmlId) {
     let target = document.getElementById(`htmlLabel:${htmlId}`);
     if (target != null) {
-      target.parentElement.parentElement.remove();
+      target.parentElement.parentElement.style.visibility = 'hidden';
       return true;
     }
     return false;
@@ -92,32 +101,43 @@ export function loadHtmlNode() {
     }
   }
 
-  let rcard = true;
+  function showHtmlLabel(htmlId) {
+    let target = document.getElementById(`htmlLabel:${htmlId}`);
+    if (target != null) {
+      target.parentElement.parentElement.style.visibility = 'visible';
+      return true;
+    }
+    return false;
+  }
+
+  // Removes html labels for corresponding cytoscape query
+  function showHtmlLabels(cy, query) {
+    let cyNodes = cy.elements(query);
+    let length = cyNodes.length;
+    let found = false;
+
+    for (let i = 0; i < length; i++) {
+      found = showHtmlLabel(cyNodes[i].id());
+      if (found) return;
+    }
+  }
+
   // Set html labels based on templates, sets cytoscape zoom to change html based on cytoscape zoom level
   function setTemplate(cy, templates, query) {
     let curZoomRange = intializeCardHtml(cy, templates, query);
     let minZoom = templates[0].zoomRange[0];
     let htmlRemoved = false;
     let altColorSet = false;
-
-    if (cy.zoom() < minZoom && !htmlRemoved) {
-      removeHtmlLabels(cy, query);
-      htmlRemoved = true;
-      curZoomRange = [0, templates[0].zoomRange[0]];
-      cy.batch(() => {
-        cy.$(query).addClass('htmlNodeAltStyle');
-        cy.$(query).removeClass('htmlNodeBaseStyle');
-        //cy.style().selector(query).style('background-color', altColor).update();
-      });
-      altColorSet = true;
-    }
+    let resized = false;
 
     cy.on('zoom', function (evt) {
-      cy.removeListener('data');
-      cy.removeListener('style');
+      if (!resized) resized = resizeCard(cy);
 
-      if (cy.zoom() < minZoom && !htmlRemoved) {
+      let zoom = cy.zoom();
+
+      if (zoom < minZoom && !htmlRemoved) {
         removeHtmlLabels(cy, query);
+
         htmlRemoved = true;
         curZoomRange = [0, templates[0].zoomRange[0]];
 
@@ -129,51 +149,47 @@ export function loadHtmlNode() {
         altColorSet = true;
       }
 
-      if (cy.zoom() < curZoomRange[0] || cy.zoom() > curZoomRange[1]) {
+      if (zoom < curZoomRange[0] || zoom > curZoomRange[1]) {
         for (let i = 0; i < templates.length; i++) {
-          if (cy.zoom() > templates[i].zoomRange[0] && cy.zoom() < templates[i].zoomRange[1]) {
-            setCardData(cy, templates[i].template, query);
-            resizeCard(cy);
-            curZoomRange = templates[i].zoomRange;
+          // Not sure if needed yet...
+          // if (templates[i].resize != true) {
+          //   templates[i].resize = resizeCard(cy);
+          // }
 
-            if (!htmlRemoved) {
-              removeHtmlLabels(cy, query);
-            }
+          if (zoom > templates[i].zoomRange[0] && zoom < templates[i].zoomRange[1]) {
+            updateCardData(cy, templates[i].template, query);
+
+            curZoomRange = templates[i].zoomRange;
 
             if (altColorSet) {
               cy.batch(() => {
                 cy.$(query).removeClass('htmlNodeAltStyle');
                 cy.$(query).addClass('htmlNodeBaseStyle');
-                //cy.style().selector(query).style('background-color', defaultColor).update();
               });
               altColorSet = false;
+
+              showHtmlLabels(cy, query);
+              if (templates[i].htmlSet != true) {
+                intializeCardHtml(cy, templates, query);
+                templates[i].htmlSet = true;
+              }
             }
             htmlRemoved = false;
-            break;
           }
         }
       }
     });
+    cy.emit('zoom');
   }
 
   function createHtmlNode(cytoscape, cy, templates) {
     nodeHtmlLabel(cytoscape);
 
-    function updateDataOrStyleCyHandler() {
-      () => {};
-    }
-
     for (let key in templates) {
-      setTemplate(
-        cy,
-        templates[key].template,
-        templates[key].query,
-        templates[key].defaultColor,
-        templates[key].altColor
-      );
+      setTemplate(cy, templates[key].template, templates[key].query);
     }
   }
-  console.log('cytoscape.js-html-node loaded.');
+  console.log('cytoscape.js-html-node:loaded');
   return {
     createHtmlNode: createHtmlNode,
   };
