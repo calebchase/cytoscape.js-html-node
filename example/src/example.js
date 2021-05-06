@@ -1,7 +1,7 @@
 import cytoscape from 'cytoscape';
-import { register as htmlnode } from 'cytoscape-html-node';
+//import { register as htmlnode } from 'cytoscape-html-node';
 //import { register as htmlnode } from '../../src/index.js';
-//import { register as htmlnode } from '../../dist/main.bundle.js';
+import { register as htmlnode } from '../../dist/main.bundle.js';
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
 
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let picArrayh = ['images/hd1.jpg', 'images/hd2.jpg', 'images/hd3.jpg', 'images/hd4.jpg'];
 
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 100; i++) {
     cy.add({
       group: 'nodes',
       data: {
@@ -285,8 +285,23 @@ document.addEventListener('DOMContentLoaded', function () {
       },
     });
   }
+
   var layout = cy.layout({ name: 'grid', spacingFactor: 2 });
   layout.run();
+
+  var intervalId = window.setInterval(function () {
+    console.log('hello');
+    cy.add({
+      group: 'nodes',
+      data: {
+        type: 'person',
+        longName: 'Roger Kint',
+        shortName: 'Kint',
+        image: picArray[Math.floor(Math.random() * picArray.length)],
+      },
+    });
+    //layout.run();
+  }, 5000);
 
   const htmlnode = cy.htmlnode();
 
@@ -419,6 +434,144 @@ document.addEventListener('DOMContentLoaded', function () {
                         <span class="smallFont cardField">#{data.identifierTitle}</span>
                       </div>
                       
+                      <div class="smallFont">#{data.longSum}</div>
+                    </div>`,
+            cssClass: 'htmlidentifier',
+          },
+        },
+      ],
+    },
+  });
+
+  htmlnode.createHtmlNode(cytoscape, cy, {
+    person: {
+      query: "[type = 'person']",
+      template: [
+        {
+          zoomRange: [0.3, 1],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}" class="">
+                      <div class=" largeFont">#{data.longName}</div>
+                      <img src="#{data.image}" loading="lazy">
+                    </div>`,
+            cssClass: 'htmlPerson',
+          },
+        },
+        {
+          zoomRange: [1, 3],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}" class="cardField">
+                      <div class="cardField">
+                        <i class="material-icons iconHeight">person</i>
+                        <span class="">#{data.shortName}</span>
+                      </div>
+                      <img src="#{data.image}" loading="lazy">
+
+                      <div class="">#{data.shortSum}</div>
+                    </div>`,
+            cssClass: 'htmlPerson',
+          },
+        },
+        {
+          zoomRange: [3, 100],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}" class="cardField">
+                      <div class="cardField">
+                        <i class="material-icons iconHeight smallFont">person</i>
+                        <span class="smallFont">#{data.longName}</span>
+                      </div>
+                      <img src="#{data.image}" loading="lazy">
+                      <div class="smallFont">#{data.longSum}</div>
+                    </div>`,
+            cssClass: 'htmlPerson',
+          },
+        },
+      ],
+    },
+
+    event: {
+      query: "[type = 'event']",
+      template: [
+        {
+          zoomRange: [0.3, 1],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}">
+                <div class="main-container">
+                  <div class="left-container"><i style="color:darkred;"class="material-icons font">event</i></div>
+                  <div class="right-container">
+                    <div class="half-containers largeFont"><b>#{data.eventTitle}</b></div>
+                  </div>
+                </div>
+              </div>`,
+            cssClass: 'htmlEvent',
+          },
+        },
+        {
+          zoomRange: [1, 3],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}">
+                <div class="main-container">
+                  <div class="left-container"><i style="color:darkred;"class="material-icons font">event</i></div>
+                  <div class="right-container eventTitle">
+                    <div class="half-containers"><b>#{data.eventTitle}</b></div>
+                    <div class="half-containers">#{data.shortSum}</div>
+                  </div>
+                </div>
+              </div>`,
+            cssClass: 'htmlEvent',
+          },
+        },
+        {
+          zoomRange: [3, 100],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}">
+                <div class="main-container">
+                  <div class="left-container"><i style="color:darkred;"class="material-icons font">event</i></div>
+                  <div class="right-container smallFont eventTitle">
+                    <div class="half-containers"><b>#{data.eventTitle}</b></div>
+                    <div class="half-containers">#{data.longSum}</div>
+                  </div>
+                </div>
+              </div>`,
+            cssClass: 'htmlEvent',
+          },
+        },
+      ],
+    },
+
+    identifier: {
+      query: "[type = 'identifier']",
+      template: [
+        {
+          zoomRange: [0.3, 1],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}" >
+                      <div class="largeFont">#{data.identifierTitle}</div>
+                      <i style="color:darkgreen;"class="material-icons font">#{data.icon}</i>
+                    </div>`,
+            cssClass: 'htmlidentifier',
+          },
+        },
+        {
+          zoomRange: [1, 3],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}" >
+                      <div>#{data.identifierTitle}</div>
+                      <i style="color:darkgreen;" class="material-icons font">#{data.icon}</i>
+                      <div>#{data.shortSum}</div>
+                    </div>`,
+            cssClass: 'htmlidentifier',
+          },
+        },
+        {
+          zoomRange: [3, 100],
+          template: {
+            html: `<div id="htmlLabel:#{data.id}" >
+                      <div>
+                        <i style="color:darkgreen;" class="material-icons iconHeight smallFont">#{data.icon}</i>
+                        <span class="smallFont cardField">#{data.identifierTitle}</span>
+                      </div>
+
                       <div class="smallFont">#{data.longSum}</div>
                     </div>`,
             cssClass: 'htmlidentifier',

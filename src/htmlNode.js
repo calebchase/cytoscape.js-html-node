@@ -1,14 +1,10 @@
-//import nodeHtmlLabel from './cytoscape-node-html-label'
-
-var nodeHtmlLabel = require('./cytoscape-node-html-label');
-
 export function loadHtmlNode() {
-  function resizeCard(cy) {
+  function resizeCard(cy, query) {
     let div;
     let found = false;
 
     cy.batch(function () {
-      cy.nodes().forEach(function (ele) {
+      cy.nodes(query).forEach(function (ele) {
         div = document.getElementById(`htmlLabel:${ele.id()}`);
         if (div != null) {
           found = true;
@@ -33,7 +29,6 @@ export function loadHtmlNode() {
       if (cyZoom >= templates[i].zoomRange[0] && cyZoom < templates[i].zoomRange[1]) {
         templates[i].htmlSet = true;
         setCardData(cy, templates[i].template, query);
-
         return templates[i].zoomRange;
       }
     }
@@ -122,6 +117,21 @@ export function loadHtmlNode() {
     }
   }
 
+  function updateNewNodeSet(cy, newNodeSet) {
+    newNodeSet.forEach((nodeId) => {
+      if (resizeCard(cy, `node#${nodeId}`)) {
+        newNodeSet.delete(nodeId);
+      }
+    });
+  }
+
+  function updateNodesOnRender(cy, newNodeSet) {
+    if (newNodeSet.size != 0) updateNewNodeSet(cy, newNodeSet);
+    else {
+      cy.removeListener('render a');
+    }
+  }
+
   // Set html labels based on templates, sets cytoscape zoom to change html based on cytoscape zoom level
   function setTemplate(cy, templates, query) {
     let curZoomRange = intializeCardHtml(cy, templates, query);
@@ -129,6 +139,30 @@ export function loadHtmlNode() {
     let htmlRemoved = false;
     let altColorSet = false;
     let resized = false;
+    let i;
+
+    let newNodeSet = new Set();
+
+    cy.on('add', query, function (evt) {
+      let curretnIndex = i;
+      if (altColorSet) {
+        cy.batch(() => {
+          evt.target.addClass('htmlNodeAltStyle');
+        });
+      } else {
+        evt.target.addClass('htmlNodeBaseStyle');
+      }
+
+      newNodeSet.add(evt.target.id());
+
+      cy.on('render a', function () {
+        console.log(evt.target.id());
+        updateNodesOnRender(cy, newNodeSet);
+        if (templates[curretnIndex] != undefined) {
+          updateCardData(cy, templates[i].template, `node#${evt.target.id()}`);
+        }
+      });
+    });
 
     cy.on('zoom', function (evt) {
       if (!resized) resized = resizeCard(cy);
@@ -144,18 +178,12 @@ export function loadHtmlNode() {
         cy.batch(() => {
           cy.$(query).addClass('htmlNodeAltStyle');
           cy.$(query).removeClass('htmlNodeBaseStyle');
-          //cy.style().selector(query).style('background-color', altColor).update();
         });
         altColorSet = true;
       }
 
       if (zoom < curZoomRange[0] || zoom > curZoomRange[1]) {
-        for (let i = 0; i < templates.length; i++) {
-          // Not sure if needed yet...
-          // if (templates[i].resize != true) {
-          //   templates[i].resize = resizeCard(cy);
-          // }
-
+        for (i = 0; i < templates.length; i++) {
           if (zoom > templates[i].zoomRange[0] && zoom < templates[i].zoomRange[1]) {
             updateCardData(cy, templates[i].template, query);
 
@@ -169,12 +197,14 @@ export function loadHtmlNode() {
               altColorSet = false;
 
               showHtmlLabels(cy, query);
+
               if (templates[i].htmlSet != true) {
                 intializeCardHtml(cy, templates, query);
                 templates[i].htmlSet = true;
               }
             }
             htmlRemoved = false;
+            break;
           }
         }
       }
@@ -183,13 +213,20 @@ export function loadHtmlNode() {
   }
 
   function createHtmlNode(cytoscape, cy, templates) {
-    nodeHtmlLabel(cytoscape);
+    try {
+      if (!cy.__proto__.nodeHtmlLabel) {
+        var nodeHtmlLabel = require('./cytoscape-node-html-label');
+        nodeHtmlLabel(cytoscape);
 
-    for (let key in templates) {
-      setTemplate(cy, templates[key].template, templates[key].query);
-    }
+        for (let key in templates) {
+          setTemplate(cy, templates[key].template, templates[key].query);
+        }
+      }
+    } catch {}
   }
-  console.log('cytoscape.js-html-node:loaded');
+
+  console.log('cytoscape.js-html-node : loaded');
+
   return {
     createHtmlNode: createHtmlNode,
   };
