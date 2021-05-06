@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "cytoscape": "^3.18.0",
-    "cytoscape-html-node": "^2.0.4",
+    "cytoscape-html-node": "^2.0.5",
     "cytoscape-node-html-label": "^1.2.2"
   }
 }
