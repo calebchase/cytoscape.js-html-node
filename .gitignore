@@ -3,3 +3,4 @@
 demo/
 .prettierrc
 Untitled.code-workspace
+example/dist/images/*
