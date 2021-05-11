@@ -1,30 +1,7 @@
 export function loadHtmlNode() {
-  function resizeCard(cy, query) {
-    let div;
-    let found = false;
-
-    cy.batch(function () {
-      cy.nodes(query).forEach(function (ele) {
-        div = document.getElementById(`htmlLabel:${ele.id()}`);
-        if (div != null) {
-          found = true;
-
-          ele.style({
-            width: div.parentElement.offsetWidth,
-            height: div.parentElement.offsetHeight,
-          });
-        }
-      });
-    });
-    return found;
-  }
-
-  window.onload = () => resizeCard(cy);
-
   // Sets starting html for labels based on cytoscape zoom level
   function intializeCardHtml(cy, templates, query) {
     let cyZoom = cy.zoom();
-
     for (let i = 0; i < templates.length; i++) {
       if (cyZoom >= templates[i].zoomRange[0] && cyZoom < templates[i].zoomRange[1]) {
         templates[i].htmlSet = true;
@@ -49,6 +26,12 @@ export function loadHtmlNode() {
 
   function updateCardData(cy, cardData, query) {
     cy.nodes(query).forEach(function (ele) {
+      let eleNodeHtml = ele.data('htmlNode');
+
+      if (eleNodeHtml) {
+        ele.data('htmlNode').innerHTML = getCardHtml(ele.data(), cardData);
+      }
+
       let div = document.getElementById(`htmlLabel:${ele.id()}`);
 
       if (div != null) {
@@ -119,9 +102,7 @@ export function loadHtmlNode() {
 
   function updateNewNodeSet(cy, newNodeSet) {
     newNodeSet.forEach((nodeId) => {
-      if (resizeCard(cy, `node#${nodeId}`)) {
-        newNodeSet.delete(nodeId);
-      }
+      newNodeSet.delete(nodeId);
     });
   }
 
@@ -153,19 +134,20 @@ export function loadHtmlNode() {
         evt.target.addClass('htmlNodeBaseStyle');
       }
 
-      newNodeSet.add(evt.target.id());
-
-      cy.on('render a', function () {
+      cy.on('render', function () {
         updateNodesOnRender(cy, newNodeSet);
         if (templates[curretnIndex] != undefined) {
           updateCardData(cy, templates[i].template, `node#${evt.target.id()}`);
         }
       });
+
+      if (templates[curretnIndex] != undefined) {
+        updateCardData(cy, templates[i].template, `node#${evt.target.id()}`);
+      }
+      //cy.emit('render');
     });
 
     cy.on('zoom', function (evt) {
-      if (!resized) resized = resizeCard(cy);
-
       let zoom = cy.zoom();
 
       if (zoom < minZoom && !htmlRemoved) {
@@ -179,9 +161,8 @@ export function loadHtmlNode() {
           cy.$(query).removeClass('htmlNodeBaseStyle');
         });
         altColorSet = true;
-      }
-
-      if (zoom < curZoomRange[0] || zoom > curZoomRange[1]) {
+      } else if (zoom < curZoomRange[0] || zoom > curZoomRange[1]) {
+        console.log('here');
         for (i = 0; i < templates.length; i++) {
           if (zoom > templates[i].zoomRange[0] && zoom < templates[i].zoomRange[1]) {
             updateCardData(cy, templates[i].template, query);
@@ -221,7 +202,9 @@ export function loadHtmlNode() {
           setTemplate(cy, templates[key].template, templates[key].query);
         }
       }
-    } catch {}
+    } catch {
+      console.warn('cytoscape.js-html-node: multiple instances attempted to be called');
+    }
   }
 
   //console.log('cytoscape.js-html-node - loaded');

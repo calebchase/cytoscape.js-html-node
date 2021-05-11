@@ -16,7 +16,7 @@
     return undefined;
   };
   var LabelElement = (function () {
-    function LabelElement(_a, params) {
+    function LabelElement(_a, params, _cy) {
       var node = _a.node,
         _b = _a.position,
         position = _b === void 0 ? null : _b,
@@ -26,7 +26,7 @@
       this._node = node;
       this.initStyles(params.cssClass);
       if (data) {
-        this.updateData(data);
+        this.updateData(data, _cy);
       }
       if (position) {
         this.updatePosition(position);
@@ -65,14 +65,25 @@
       ];
       this.tpl = tpl;
     };
-    LabelElement.prototype.updateData = function (data) {
+
+    LabelElement.prototype.updateData = function (data, _cy) {
       while (this._node.firstChild) {
         this._node.removeChild(this._node.firstChild);
       }
       var children = new DOMParser().parseFromString(this.tpl(data), 'text/html').body.children;
       for (var i = 0; i < children.length; ++i) {
         var el = children[i];
+
         this._node.appendChild(el);
+
+        let cyNode = _cy.nodes(`#${el.id.split(':')[1]}`);
+
+        cyNode.data('htmlNode', el);
+
+        cyNode.style({
+          width: cyNode.data('htmlNode').parentElement.offsetWidth,
+          height: cyNode.data('htmlNode').parentElement.offsetHeight,
+        });
       }
     };
     LabelElement.prototype.getNode = function () {
@@ -110,14 +121,14 @@
       this._node = node;
       this._elements = {};
     }
-    LabelContainer.prototype.addOrUpdateElem = function (id, param, payload) {
+    LabelContainer.prototype.addOrUpdateElem = function (id, param, payload, _cy) {
       if (payload === void 0) {
         payload = {};
       }
       var cur = this._elements[id];
       if (cur) {
         cur.updateParams(param);
-        cur.updateData(payload.data);
+        cur.updateData(payload.data, _cy);
         cur.updatePosition(payload.position);
       } else {
         var nodeElem = document.createElement('div');
@@ -128,7 +139,8 @@
             data: payload.data,
             position: payload.position,
           },
-          param
+          param,
+          _cy
         );
       }
     };
@@ -202,10 +214,15 @@
       _params.forEach(function (x) {
         cy.elements(x.query).forEach(function (d) {
           if (d.isNode()) {
-            _lc.addOrUpdateElem(d.id(), x, {
-              position: getNodePosition(d),
-              data: d.data(),
-            });
+            _lc.addOrUpdateElem(
+              d.id(),
+              x,
+              {
+                position: getNodePosition(d),
+                data: d.data(),
+              },
+              _cy
+            );
           }
         });
       });
@@ -216,10 +233,15 @@
         return target.is(x.query);
       });
       if (param) {
-        _lc.addOrUpdateElem(target.id(), param, {
-          position: getNodePosition(target),
-          data: target.data(),
-        });
+        _lc.addOrUpdateElem(
+          target.id(),
+          param,
+          {
+            position: getNodePosition(target),
+            data: target.data(),
+          },
+          _cy
+        );
       }
     }
     function layoutstopHandler(_a) {
@@ -237,23 +259,6 @@
     }
     function moveCyHandler(ev) {
       _lc.updateElemPosition(ev.target.id(), getNodePosition(ev.target));
-    }
-    function updateDataOrStyleCyHandler(ev) {
-      console.log('REMOVE THIS!');
-      setTimeout(function () {
-        var target = ev.target;
-        var param = $$find(_params.slice().reverse(), function (x) {
-          return target.is(x.query);
-        });
-        if (param && !target.removed()) {
-          _lc.addOrUpdateElem(target.id(), param, {
-            position: getNodePosition(target),
-            data: target.data(),
-          });
-        } else {
-          _lc.removeElemById(target.id());
-        }
-      }, 0);
     }
     function wrapCyHandler(_a) {
       var cy = _a.cy;
