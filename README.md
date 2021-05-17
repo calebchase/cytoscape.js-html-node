@@ -48,7 +48,9 @@ require(['cytoscape', 'cytoscape-html-node'], function (cytoscape, htmlnode) {
 
 ## API
 
-Example:
+### Example
+
+- For a more detailed example, see `example/src/example.js`.
 
 ```js
 import cytoscape from 'cytoscape';
@@ -187,11 +189,11 @@ htmlnode.createHtmlNode(cytoscape, cy, {
 });
 ```
 
-Use information:
+### Use information
 
-- For a detailed example, see `example/src/example.js`
+- The extension call should occur only once. All templates should be specified in that call, even if they are not immediately needed.
 
-- `query`: Accepts any cytoscape query. Specifies which node(s)`template` will apply to.
+- `query`: Accepts any cytoscape query. Specifies which node(s) `template` will apply to. Nodes added after the intial extension call that match the `query` will have `html` applied to them.
 
 - `htmlNodeBaseStyle`: The style of the cytoscape node(s) when zoom has not passed the minimum `zoomRange` value.
 
@@ -203,10 +205,10 @@ Use information:
 
 - The parent `div` should follow: `<div id="htmlLabel:#{data.id}"></div>`
 
-Style suggestions:
+### Style suggestions
 
 - The width and height of the parent html-node `div` should be specified.
 
 - The parent html-node `div` should be centered.
 
-- Either content should not exceed the height of the parent html-node `div` or overflow should be managed .
+- Either content should not exceed the height of the parent html-node `div` or overflow should be managed.
