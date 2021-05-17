@@ -80,10 +80,24 @@
 
         cyNode.data('htmlNode', el);
 
-        cyNode.style({
-          width: cyNode.data('htmlNode').parentElement.offsetWidth,
-          height: cyNode.data('htmlNode').parentElement.offsetHeight,
-        });
+        setTimeout(function () {
+          try {
+            if (el != undefined) {
+              cyNode.style({
+                width: Math.max(
+                  cyNode.data('htmlNode').parentElement.offsetWidth,
+                  cyNode.data('htmlNode').offsetWidth
+                ),
+                height: Math.max(
+                  cyNode.data('htmlNode').parentElement.offsetHeight,
+                  cyNode.data('htmlNode').offsetHeight
+                ),
+              });
+            }
+          } catch {
+            console.warn('cytoscape.js-html-node: unable to create html label');
+          }
+        }, 0);
       }
     };
     LabelElement.prototype.getNode = function () {
