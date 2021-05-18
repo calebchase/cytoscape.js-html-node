@@ -24,17 +24,16 @@ export function loadHtmlNode() {
     return final;
   }
 
+  // Updates html label for node
   function updateCardData(cy, cardData, query) {
     cy.nodes(query).forEach(function (ele) {
-      let eleNodeHtml = ele.data('htmlNode');
-
-      if (eleNodeHtml) {
+      if (ele.data('htmlNode')) {
         ele.data('htmlNode').innerHTML = getCardHtml(ele.data(), cardData);
       }
     });
   }
 
-  // Call to nodeHtmlLabel, displays htm
+  // Call to nodeHtmlLabel, displays html
   function setCardData(cy, cardData, query) {
     cy.nodeHtmlLabel([
       {
@@ -86,19 +85,6 @@ export function loadHtmlNode() {
     }
   }
 
-  function updateNewNodeSet(cy, newNodeSet) {
-    newNodeSet.forEach((nodeId) => {
-      newNodeSet.delete(nodeId);
-    });
-  }
-
-  function updateNodesOnRender(cy, newNodeSet) {
-    if (newNodeSet.size != 0) updateNewNodeSet(cy, newNodeSet);
-    else {
-      cy.removeListener('render a');
-    }
-  }
-
   // Set html labels based on templates, sets cytoscape zoom to change html based on cytoscape zoom level
   function setTemplate(cy, templates, query) {
     let curZoomRange = intializeCardHtml(cy, templates, query);
@@ -110,7 +96,7 @@ export function loadHtmlNode() {
     let newNodeSet = new Set();
 
     cy.on('add', query, function (evt) {
-      // Using set timeout with time = 0 allows the div to be rendered first...
+      // Using set timeout with time = 0 allows html to finish rendering
       setTimeout(function () {
         let curretnIndex = i;
 

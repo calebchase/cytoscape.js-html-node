@@ -1,7 +1,7 @@
 import cytoscape from 'cytoscape';
 //import { register as htmlnode } from 'cytoscape-html-node';
-//import { register as htmlnode } from '../../src/index.js';
-import { register as htmlnode } from '../../dist/main.bundle.js';
+import { register as htmlnode } from '../../src/index.js';
+//import { register as htmlnode } from '../../dist/main.bundle.js';
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
 
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data: {
           type: 'event',
           longName: 'event event',
-          shortName: 'Kfffffint',
+          shortName: 'event',
           image: picArray[Math.floor(Math.random() * picArray.length)],
         },
       },
@@ -93,18 +93,13 @@ document.addEventListener('DOMContentLoaded', function () {
         data: {
           type: 'event',
           longName: 'event event',
-          shortName: 'Kfffffint',
+          shortName: 'event',
           image: picArray[Math.floor(Math.random() * picArray.length)],
         },
       },
       {
         group: 'nodes',
-        data: {
-          type: '',
-          longName: 'event',
-          shortName: 'Kint',
-          image: picArray[Math.floor(Math.random() * picArray.length)],
-        },
+        data: {},
       },
       {
         group: 'nodes',

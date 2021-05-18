@@ -80,6 +80,7 @@
 
         cyNode.data('htmlNode', el);
 
+        // Using set timeout with time = 0 allows html to finish rendering
         setTimeout(function () {
           try {
             if (el != undefined) {
