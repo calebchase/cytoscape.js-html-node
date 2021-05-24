@@ -79,26 +79,6 @@
         let cyNode = _cy.nodes(`#${el.id.split(':')[1]}`);
 
         cyNode.data('htmlNode', el);
-
-        // Using set timeout with time = 0 allows html to finish rendering
-        setTimeout(function () {
-          try {
-            if (el != undefined) {
-              cyNode.style({
-                width: Math.max(
-                  cyNode.data('htmlNode').parentElement.offsetWidth,
-                  cyNode.data('htmlNode').offsetWidth
-                ),
-                height: Math.max(
-                  cyNode.data('htmlNode').parentElement.offsetHeight,
-                  cyNode.data('htmlNode').offsetHeight
-                ),
-              });
-            }
-          } catch {
-            console.warn('cytoscape.js-html-node: unable to create html label');
-          }
-        }, 0);
       }
     };
     LabelElement.prototype.getNode = function () {
@@ -147,7 +127,29 @@
         cur.updatePosition(payload.position);
       } else {
         var nodeElem = document.createElement('div');
-        this._node.appendChild(nodeElem);
+
+        var observer = new MutationObserver(function (mutations) {
+          if (document.contains(nodeElem)) {
+            let cyNode = _cy.nodes(`#${nodeElem.children[0].id.split(':')[1]}`);
+            try {
+              cyNode.style({
+                width: nodeElem.offsetWidth,
+                height: nodeElem.offsetHeight,
+              });
+            } catch (err) {
+              console.warn('cytoscape.js-html-node: unable to create html label', err);
+            }
+            observer.disconnect();
+          }
+        });
+
+        observer.observe(document, {
+          attributes: false,
+          childList: true,
+          characterData: false,
+          subtree: true,
+        });
+
         this._elements[id] = new LabelElement(
           {
             node: nodeElem,
@@ -157,6 +159,7 @@
           param,
           _cy
         );
+        this._node.appendChild(nodeElem);
       }
     };
     LabelContainer.prototype.removeElemById = function (id) {
