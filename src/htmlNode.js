@@ -71,7 +71,6 @@ export function loadHtmlNode() {
   function showHtmlLabels(cy, query) {
     let cyNodes = cy.elements(query);
     let length = cyNodes.length;
-    let found = false;
 
     for (let i = 0; i < length; i++) {
       try {
@@ -92,8 +91,6 @@ export function loadHtmlNode() {
     let htmlRemoved = false;
     let altColorSet = false;
     let i;
-
-    let newNodeSet = new Set();
 
     cy.on('add', query, function (evt) {
       // Using set timeout with time = 0 allows html to finish rendering
@@ -132,6 +129,8 @@ export function loadHtmlNode() {
           cy.$(query).removeClass('htmlNodeBaseStyle');
         });
         altColorSet = true;
+
+        // Zoom level is new range, update html for node
       } else if (zoom < curZoomRange[0] || zoom > curZoomRange[1]) {
         for (i = 0; i < templates.length; i++) {
           if (zoom > templates[i].zoomRange[0] && zoom < templates[i].zoomRange[1]) {
