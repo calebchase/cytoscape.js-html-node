@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let picArrayh = ['images/hd1.jpg', 'images/hd2.jpg', 'images/hd3.jpg', 'images/hd4.jpg'];
 
-  for (let i = 0; i < 0; i++) {
+  for (let i = 0; i < 300; i++) {
     cy.add([
       {
         group: 'nodes',
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
       },
     ]);
-    cy.layout({ name: 'grid', spacingFactor: 2, fit: false }).run();
+    //cy.layout({ name: 'grid', spacingFactor: 2, fit: false }).run();
   }, 5000);
 
   const htmlnode = cy.htmlnode();
