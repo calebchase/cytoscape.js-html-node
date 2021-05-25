@@ -171,8 +171,8 @@ export function loadHtmlNode() {
           setTemplate(cy, templates[key].template, templates[key].query);
         }
       }
-    } catch {
-      console.warn('cytoscape.js-html-node: multiple instances attempted to be called');
+    } catch (error) {
+      console.warn('cytoscape.js-html-node: ', error);
     }
   }
 

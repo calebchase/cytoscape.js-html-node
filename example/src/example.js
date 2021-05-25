@@ -1,6 +1,6 @@
 import cytoscape from 'cytoscape';
-//import { register as htmlnode } from 'cytoscape-html-node';
-import { register as htmlnode } from '../../src/index.js';
+import { register as htmlnode } from 'cytoscape-html-node';
+//import { register as htmlnode } from '../../src/index.js';
 //import { register as htmlnode } from '../../dist/main.bundle.js';
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let picArrayh = ['images/hd1.jpg', 'images/hd2.jpg', 'images/hd3.jpg', 'images/hd4.jpg'];
 
-  for (let i = 0; i < 300; i++) {
+  for (let i = 0; i < 0; i++) {
     cy.add([
       {
         group: 'nodes',
