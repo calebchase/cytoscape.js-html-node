@@ -58,7 +58,7 @@ export function loadHtmlNode() {
     for (let i = 0; i < length; i++) {
       try {
         if (cyNodes[i].data('htmlNode') != undefined) {
-          cyNodes[i].data('htmlNode').parentElement.parentElement.style.visibility = 'hidden';
+          cyNodes[i].data('htmlNode').parentElement.style.visibility = 'hidden';
           return;
         }
       } catch {
@@ -75,7 +75,7 @@ export function loadHtmlNode() {
     for (let i = 0; i < length; i++) {
       try {
         if (cyNodes[i].data('htmlNode') != undefined) {
-          cyNodes[i].data('htmlNode').parentElement.parentElement.style.visibility = 'visible';
+          cyNodes[i].data('htmlNode').parentElement.style.visibility = 'visible';
           return;
         }
       } catch {
@@ -85,7 +85,7 @@ export function loadHtmlNode() {
   }
 
   // Set html labels based on templates, sets cytoscape zoom to change html based on cytoscape zoom level
-  function setTemplate(cy, templates, query) {
+  function setTemplate(cy, templates, query, nodeStyle) {
     let curZoomRange = intializeCardHtml(cy, templates, query);
     let minZoom = templates[0].zoomRange[0];
     let htmlRemoved = false;
@@ -99,13 +99,13 @@ export function loadHtmlNode() {
 
         if (altColorSet) {
           cy.batch(() => {
-            evt.target.addClass('htmlNodeAltStyle');
+            evt.target.addClass(nodeStyle.alt);
           });
 
           removeHtmlLabels(cy, `node#${evt.target.id()}`);
         } else {
           cy.batch(() => {
-            evt.target.addClass('htmlNodeBaseStyle');
+            evt.target.addClass(nodeStyle.base);
           });
 
           if (templates[curretnIndex] != undefined) {
@@ -125,8 +125,8 @@ export function loadHtmlNode() {
         curZoomRange = [0, templates[0].zoomRange[0]];
 
         cy.batch(() => {
-          cy.$(query).addClass('htmlNodeAltStyle');
-          cy.$(query).removeClass('htmlNodeBaseStyle');
+          cy.$(query).addClass(nodeStyle.alt);
+          cy.$(query).removeClass(nodeStyle.base);
         });
         altColorSet = true;
 
@@ -140,8 +140,8 @@ export function loadHtmlNode() {
 
             if (altColorSet) {
               cy.batch(() => {
-                cy.$(query).removeClass('htmlNodeAltStyle');
-                cy.$(query).addClass('htmlNodeBaseStyle');
+                cy.$(query).removeClass(nodeStyle.alt);
+                cy.$(query).addClass(nodeStyle.base);
               });
               altColorSet = false;
 
@@ -168,16 +168,13 @@ export function loadHtmlNode() {
         nodeHtmlLabel(cytoscape);
 
         for (let key in templates) {
-          setTemplate(cy, templates[key].template, templates[key].query);
+          setTemplate(cy, templates[key].template, templates[key].query, templates[key].nodeStyle);
         }
       }
     } catch (error) {
       console.warn('cytoscape.js-html-node: ', error);
     }
   }
-
-  console.log('cytoscape.js-html-node:loaded');
-
   return {
     createHtmlNode: createHtmlNode,
   };

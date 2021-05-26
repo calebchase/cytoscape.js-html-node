@@ -77,8 +77,6 @@
         this._node.appendChild(el);
 
         let cyNode = _cy.nodes(`#${el.id.split(':')[1]}`);
-
-        cyNode.data('htmlNode', el);
       }
     };
     LabelElement.prototype.getNode = function () {
@@ -131,6 +129,7 @@
         var observer = new MutationObserver(function (mutations) {
           if (document.contains(nodeElem)) {
             let cyNode = _cy.nodes(`#${nodeElem.children[0].id.split(':')[1]}`);
+            cyNode.data('htmlNode', nodeElem);
             try {
               cyNode.style({
                 width: nodeElem.offsetWidth,
