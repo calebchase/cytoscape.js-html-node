@@ -97,13 +97,13 @@ export function loadHtmlNode() {
       setTimeout(function () {
         let curretnIndex = i;
 
-        if (altColorSet) {
+        if (altColorSet && nodeStyle != undefined) {
           cy.batch(() => {
             evt.target.addClass(nodeStyle.alt);
           });
 
           removeHtmlLabels(cy, `node#${evt.target.id()}`);
-        } else {
+        } else if (nodeStyle != undefined) {
           cy.batch(() => {
             evt.target.addClass(nodeStyle.base);
           });
@@ -124,10 +124,12 @@ export function loadHtmlNode() {
         htmlRemoved = true;
         curZoomRange = [0, templates[0].zoomRange[0]];
 
-        cy.batch(() => {
-          cy.$(query).addClass(nodeStyle.alt);
-          cy.$(query).removeClass(nodeStyle.base);
-        });
+        if (nodeStyle != undefined) {
+          cy.batch(() => {
+            cy.$(query).addClass(nodeStyle.alt);
+            cy.$(query).removeClass(nodeStyle.base);
+          });
+        }
         altColorSet = true;
 
         // Zoom level is new range, update html for node
@@ -139,10 +141,13 @@ export function loadHtmlNode() {
             curZoomRange = templates[i].zoomRange;
 
             if (altColorSet) {
-              cy.batch(() => {
-                cy.$(query).removeClass(nodeStyle.alt);
-                cy.$(query).addClass(nodeStyle.base);
-              });
+              if (nodeStyle != undefined) {
+                cy.batch(() => {
+                  cy.$(query).removeClass(nodeStyle.alt);
+                  cy.$(query).addClass(nodeStyle.base);
+                });
+              }
+
               altColorSet = false;
 
               showHtmlLabels(cy, query);
