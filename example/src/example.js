@@ -1,7 +1,7 @@
 import cytoscape from 'cytoscape';
-import { register as htmlnode } from 'cytoscape-html-node';
+//import { register as htmlnode } from 'cytoscape-html-node';
 //import { register as htmlnode } from '../../src/index.js';
-//import { register as htmlnode } from '../../dist/main.bundle.js';
+import { register as htmlnode } from '../../dist/main.bundle.js';
 
 var nodeHtmlLabel = require('cytoscape-node-html-label');
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let picArrayh = ['images/hd1.jpg', 'images/hd2.jpg', 'images/hd3.jpg', 'images/hd4.jpg'];
 
-  for (let i = 0; i < 0; i++) {
+  for (let i = 0; i < 100; i++) {
     cy.add([
       {
         group: 'nodes',
@@ -129,9 +129,14 @@ document.addEventListener('DOMContentLoaded', function () {
   htmlnode.createHtmlNode(cytoscape, cy, {
     person: {
       query: "[type = 'person']",
+      nodeStyle: {
+        base: 'htmlNodeBaseStyle',
+        alt: 'htmlNodeAltStyle',
+      },
       template: [
         {
           zoomRange: [0.3, 1],
+
           template: {
             html: `<div id="htmlLabel:#{data.id}" class="">
                       <div class=" largeFont">#{data.longName}</div>
@@ -174,6 +179,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     event: {
       query: "[type = 'event']",
+      nodeStyle: {
+        base: 'htmlNodeBaseStyle',
+        alt: 'htmlNodeAltStyle',
+      },
       template: [
         {
           zoomRange: [0.3, 1],
@@ -224,6 +233,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     identifier: {
       query: "[type = 'identifier']",
+      nodeStyle: {
+        base: 'htmlNodeBaseStyle',
+        alt: 'htmlNodeAltStyle',
+      },
       template: [
         {
           zoomRange: [0.3, 1],
