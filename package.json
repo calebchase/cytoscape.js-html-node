@@ -37,6 +37,6 @@
     "cytoscape": "^3.18.0"
   },
   "dependencies": {
-    "cytoscape-html-node": "^2.0.9"
+    "cytoscape-html-node": "^2.0.10"
   }
 }
