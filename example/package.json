@@ -1,6 +1,6 @@
 {
   "name": "cytoscape-html-node-example",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Example project demonstrating the use of cytoscape-html-node.",
   "main": "src/example.js",
   "scripts": {
