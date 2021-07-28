@@ -171,10 +171,10 @@ export function loadHtmlNode() {
       if (!cy.__proto__.nodeHtmlLabel) {
         var nodeHtmlLabel = require('./cytoscape-node-html-label');
         nodeHtmlLabel(cytoscape);
+      }
 
-        for (let key in templates) {
-          setTemplate(cy, templates[key].template, templates[key].query, templates[key].nodeStyle);
-        }
+      for (let key in templates) {
+        setTemplate(cy, templates[key].template, templates[key].query, templates[key].nodeStyle);
       }
     } catch (error) {
       console.warn('cytoscape.js-html-node: ', error);

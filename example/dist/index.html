@@ -133,10 +133,21 @@
     #cy {
       position: absolute;
       left: 0;
-      top: 0;
+      top: 50%;
       bottom: 0;
       right: 0;
       z-index: 1;
+      border: 4px solid black;
+    }
+
+    #cyTest {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 50%;
+      right: 0;
+      z-index: 2;
+      border: 4px solid black;
     }
 
     h1 {
@@ -147,6 +158,7 @@
 
 <body>
   <div id="cy"></div>
+  <div id="cyTest"></div>
 </body>
 
 </html>

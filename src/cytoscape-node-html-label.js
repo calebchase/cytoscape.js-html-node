@@ -126,7 +126,7 @@
       } else {
         var nodeElem = document.createElement('div');
 
-        console.log('Mutation Observer created for ', nodeElem);
+        // console.log('Mutation Observer created for ', nodeElem);
         var observer = new MutationObserver(function (mutations) {
           if (document.contains(nodeElem)) {
             let cyNode = _cy.nodes(`#${nodeElem.children[0].id.split(':')[1]}`);
@@ -139,13 +139,13 @@
             } catch (err) {
               console.warn('cytoscape.js-html-node: unable to create html label', err);
             }
-            console.log(
-              `Node ID: ${cyNode.id()}\n HTML Dimensions: ${nodeElem.offsetWidth} ${
-                nodeElem.offsetHeight
-              }\n Node Updated Dimensions: ${cyNode.layoutDimensions().w} ${
-                cyNode.layoutDimensions().h
-              }`
-            );
+            // console.log(
+            // `Node ID: ${cyNode.id()}\n HTML Dimensions: ${nodeElem.offsetWidth} ${
+            //   nodeElem.offsetHeight
+            // }\n Node Updated Dimensions: ${cyNode.layoutDimensions().w} ${
+            //   cyNode.layoutDimensions().h
+            // }`
+            // );
             observer.disconnect();
           }
         });
