@@ -35,8 +35,5 @@
   },
   "peerDependencies": {
     "cytoscape": "^3.18.0"
-  },
-  "dependencies": {
-    "cytoscape-html-node": "^2.1.0"
   }
 }
