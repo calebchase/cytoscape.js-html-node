@@ -133,11 +133,11 @@
     #cy {
       position: absolute;
       left: 0;
-      top: 50%;
+      top: 0;
       bottom: 0;
       right: 0;
       z-index: 1;
-      border: 4px solid black;
+      border: 0px solid black;
     }
 
     #cyTest {
@@ -150,6 +150,19 @@
       border: 4px solid black;
     }
 
+    .html-node-notransition {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
+        -o-transform: none !important;
+        -moz-transform: none !important;
+        -ms-transform: none !important;
+        -webkit-transform: none !important;
+        transform: none !important;
+    }
+
+
     h1 {
       font-size: 1em;
       font-family: 'Calibri';
@@ -158,7 +171,7 @@
 
 <body>
   <div id="cy"></div>
-  <div id="cyTest"></div>
+  <!-- <div id="cyTest"></div> -->
 </body>
 
 </html>

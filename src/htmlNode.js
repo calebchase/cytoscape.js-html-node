@@ -1,11 +1,11 @@
 export function loadHtmlNode() {
   // Sets starting html for labels based on cytoscape zoom level
-  function intializeCardHtml(cy, templates, query) {
+  function intializeCardHtml(cy, templates, query, staticZoomLevel) {
     let cyZoom = cy.zoom();
     for (let i = 0; i < templates.length; i++) {
       if (cyZoom >= templates[i].zoomRange[0] && cyZoom < templates[i].zoomRange[1]) {
         templates.htmlSet = true;
-        setCardData(cy, templates[i].template, query);
+        setCardData(cy, templates[i].template, query, staticZoomLevel);
         return templates[i].zoomRange;
       }
     }
@@ -34,7 +34,7 @@ export function loadHtmlNode() {
   }
 
   // Call to nodeHtmlLabel, displays html
-  function setCardData(cy, cardData, query) {
+  function setCardData(cy, cardData, query, staticZoomLevel) {
     cy.nodeHtmlLabel([
       {
         query: query, // cytoscape query selector
@@ -43,6 +43,7 @@ export function loadHtmlNode() {
         halignBox: 'center', // title vertical position. Can be 'left',''center, 'right'
         valignBox: 'center', // title relative box vertical position. Can be 'top',''center, 'bottom'
         cssClass: cardData.cssClass, // any classes will be as attribute of <div> container for every title
+        staticZoomLevel: staticZoomLevel,
         tpl(data) {
           return getCardHtml(data, cardData);
         },
@@ -85,8 +86,8 @@ export function loadHtmlNode() {
   }
 
   // Set html labels based on templates, sets cytoscape zoom to change html based on cytoscape zoom level
-  function setTemplate(cy, templates, query, nodeStyle) {
-    let curZoomRange = intializeCardHtml(cy, templates, query);
+  function setTemplate(cy, templates, query, nodeStyle, staticZoomLevel) {
+    let curZoomRange = intializeCardHtml(cy, templates, query, staticZoomLevel);
     let minZoom = templates[0].zoomRange[0];
     let htmlRemoved = false;
     let altColorSet = false;
@@ -153,7 +154,7 @@ export function loadHtmlNode() {
               showHtmlLabels(cy, query);
 
               if (templates.htmlSet != true) {
-                intializeCardHtml(cy, templates, query);
+                intializeCardHtml(cy, templates, query, staticZoomLevel);
                 templates.htmlSet = true;
               }
             }
@@ -174,7 +175,13 @@ export function loadHtmlNode() {
       }
 
       for (let key in templates) {
-        setTemplate(cy, templates[key].template, templates[key].query, templates[key].nodeStyle);
+        setTemplate(
+          cy,
+          templates[key].template,
+          templates[key].query,
+          templates[key].nodeStyle,
+          templates[key].staticZoomLevel
+        );
       }
     } catch (error) {
       console.warn('cytoscape.js-html-node: ', error);

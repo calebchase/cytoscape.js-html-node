@@ -123,6 +123,7 @@ const htmlnode = cy.htmlnode();
 htmlnode.createHtmlNode(cytoscape, cy, {
   person: {
     query: "[type = 'person']",
+    staticZoomLevel: 0.3,
     template: [
       {
         zoomRange: [0.3, 1],
@@ -189,11 +190,29 @@ htmlnode.createHtmlNode(cytoscape, cy, {
 });
 ```
 
+Include the following `css` to use `staticZoomLevel`:
+
+```
+.html-node-notransition {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+    -o-transform: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+}
+```
+
 ### Use information
 
 - The extension call should occur only once. All templates should be specified in that call, even if they are not immediately needed.
 
 - `query`: Accepts any cytoscape query. Specifies which node(s) `template` will apply to. Nodes added after the intial extension call that match the `query` will have `html` applied to them.
+
+- `staticZoomLevel`: Optionally specify a zoom level. When the cytoscape zoom level is greater than `staticZoomLevel`, the corresponding `html` has a static size.
 
 - `htmlNodeBaseStyle`: The style of the cytoscape node(s) when zoom has not passed the minimum `zoomRange` value.
 
